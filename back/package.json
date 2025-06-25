@@ -4,7 +4,9 @@
   "description": "Proyecto de Mitad de año",
   "main": "index.js",
   "scripts": {
-    "test": "nodemon index.js"
+    "test": "nodemon index.js",
+    "pio": "nodemon index.js --env-file=.pio.env",
+    "home": "nodemon index.js --env-file=.home.env"
   },
   "keywords": [
     "ES"
