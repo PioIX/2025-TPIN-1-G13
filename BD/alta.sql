@@ -1,5 +1,5 @@
 CREATE TABLE IF NOT EXISTS Usuarios (
-    id INT,
+    id INT AUTOINCREMENT,
     usuario VARCHAR(50) NOT NULL,
     contraseña VARCHAR(20) NOT NULL,
     puntaje INT,
@@ -9,14 +9,14 @@ CREATE TABLE IF NOT EXISTS Usuarios (
 );
 
 CREATE TABLE IF NOT EXISTS Preguntas (
-    id_pregunta INT,
+    id_pregunta INT AUTOINCREMENT,
     pregunta VARCHAR(144),
     categoria VARCHAR(50),
     PRIMARY KEY (id_pregunta)
 );
 
 CREATE TABLE IF NOT EXISTS Respuestas (
-    id_respuesta INT,
+    id_respuesta INT AUTOINCREMENT,
     id_pregunta INT,
     correcta BOOLEAN,
     respuesta VARCHAR(144),

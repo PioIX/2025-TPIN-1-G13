@@ -63,24 +63,41 @@ function login() {
 
 // REGISTER !!!!!!!!!!!!
 
+function conseguirDatos(nombre, password) {
+    let datos = {
+        usuario: nombre,
+        contraseña: password,
+        puntaje: 0,
+        tiempo: 0,
+        es_admin: false
+    }
+    return datos
+}
 
-
-function newuser(email,password,username) {
-    let resultado = existsUser(email, password)
+async function newuser(nombre, password) {
+    let resultado = existsUser(nombre, password)
     if (resultado <= 0) {
-            users.push(new User (username, email, password))
-            return users.length;
-        } else {
+            let datos = conseguirDatos(nombre, password)
+            let response = await fetch(`http://localhost:4000/insertarUsuario`, {
+            method: "POST", //GET, POST, PUT o DELETE
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(datos)
+        })
+        let result = await response.json()
+        console.log(result)
+        ui.showModal("Usuario creado, haga el login por favor")
+    } else {
             ui.showModal("Ese usuario ya existe")
             return -1;
         }
 }
             
 function registrar() {
-    let username = ui.getUser();
-    let email = ui.getEmail();
-    let password = ui.getPassword();
-    let resultado = newuser(email, password, username)
+    let nombre = ui.getUser();
+    let password = ui.getPassword()
+    let resultado = newuser(nombre, password)
     if (resultado > 0) {
         login()
     } else {
