@@ -1,0 +1,21 @@
+{
+  "name": "preguntadostp_g13",
+  "version": "1.0.0",
+  "description": "Proyecto de Mitad de año",
+  "main": "index.js",
+  "scripts": {
+    "test": "nodemon index.js"
+  },
+  "keywords": [
+    "ES"
+  ],
+  "author": "Juan Ignacio Nastasi - Facundo Suarez - Francisco Manzanares - Agustin Putrino",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^2.2.0",
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "mysql2": "^3.14.1",
+    "nodemon": "^3.1.10"
+  }
+}
