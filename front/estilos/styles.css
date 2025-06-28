@@ -1,0 +1,9 @@
+*{
+    margin: 0px;
+}
+
+body{
+    background-color: red;
+    padding: 10px;
+    text-align: center;
+}
