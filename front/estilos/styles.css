@@ -1,9 +1,192 @@
-*{
-    margin: 0px;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-body{
-    background-color: red;
-    padding: 10px;
+/* FONDO GENERAL */
+body {
+    background: linear-gradient(to right, #ffecd2, #fcb69f);
+    min-height: 50vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+/* NAVBAR */
+.navbar {
+    background-color: #ff6b81;
+    color: white;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
     text-align: center;
+}
+
+.navbar h4,
+.navbar h5 {
+    margin: 5px 0;
+}
+
+/* CONTENEDOR DE LOGIN */
+.contenedorBody {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+}
+
+.LogAndRegister {
+    background: white;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    width: 350px;
+    animation: fadeIn 1s ease-in-out;
+}
+
+.LogAndRegister legend {
+    font-size: 1.4rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #ff6b81;
+}
+
+/* INPUTS */
+.input-usuario,
+.input-contraseña {
+    margin-bottom: 20px;
+    position: relative;
+}
+
+input {
+    width: 100%;
+    padding: 12px 10px;
+    border: 2px solid #ff6b81;
+    border-radius: 8px;
+    outline: none;
+    font-size: 1rem;
+    transition: 0.3s;
+}
+
+input:focus {
+    border-color: #ff4757;
+    background-color: #fff5f7;
+}
+
+label {
+    display: block;
+    margin-top: 5px;
+    font-size: 0.9rem;
+    color: #333;
+}
+
+/* BOTONES */
+.botones {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    color: white;
+    cursor: pointer;
+    transition: 0.3s;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.botonLoginReal {
+    background-color: #1e90ff;
+}
+
+.botonLoginReal:hover {
+    background-color: #1c86ee;
+}
+
+.botonRegisterReal {
+    background-color: #32cd32;
+}
+
+.botonRegisterReal:hover {
+    background-color: #2eb82e;
+}
+
+/* MODAL PERSONALIZADO */
+
+.area{
+    border-radius: 12px;
+    background: linear-gradient(145deg, #fefefe, #ffe9e9);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    animation: zoomIn 0.4s ease;
+    padding: 8px;
+}
+.modal-content {
+    background-color: #ff6b81;
+    color: white;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+}
+
+.modal-title {
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.3rem;
+}
+
+.modal-body {
+    font-size: 1.1rem;
+    color: #b31717;
+}
+
+.modal-footer{
+    text-align: center;
+    padding: 20px;
+}
+
+.modal-footer button {
+    background-color: #28a745;
+    border-radius: 8px;
+    padding: 8px 16px;
+}
+
+.modal-footer button:hover {
+    background-color: #218838;
+}
+
+/* ANIMACIONES */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes zoomIn {
+    from {
+        opacity: 0;
+        transform: scale(0.7);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* FOOTER */
+footer {
+    text-align: center;
+    padding: 15px;
+    background-color: #ff6b81;
+    color: white;
+    font-weight: bold;
+    box-shadow: 0 -4px 8px rgba(0,0,0,0.2);
 }

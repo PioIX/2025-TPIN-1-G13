@@ -4,7 +4,7 @@ var cors = require('cors');
 const { realizarQuery } = require('./modulos/mysql');
 
 var app = express(); //Inicializo express
-var port = process.env.PORT || 4000; //Ejecuto el servidor en el puerto 3000
+var port = process.env.PORT || 4001; //Ejecuto el servidor en el puerto 3000
 
 // Convierte una petición recibida (POST-GET...) a objeto JSON
 app.use(bodyParser.urlencoded({extended:false}));
@@ -374,11 +374,67 @@ app.get('/librosinfo', async function (req,res) {
 
 
 app.get('/usuarios', async function(req, res){
-    console.log(req.query);
-    const usuarios = await realizarQuery(`
-    SELECT * FROM Usuarios;
-    `)
-    console.log({usuarios})
-    res.send(usuarios)
+    try {
+        console.log(req.query);
+        const usuarios = await realizarQuery(`
+        SELECT * FROM Usuarios;
+        `)
+        console.log({usuarios})
+        res.send(usuarios)
+    } catch (error) {
+        console.log(error)
+    }
+})
+
+
+// --------------------------------- LOGIN ----------------------------------------------------------------------------------------
+
+app.post('/usuarioExiste', async function(req,res){
+    try {
+        console.log("Recibido:", req.body.usuario, req.body.contraseña);
+        const usuario = await realizarQuery(`
+            SELECT * FROM Usuarios WHERE usuario = '${req.body.usuario}' and contraseña = '${req.body.contraseña}'
+        `)
+        console.log(usuario)
+        res.send(usuario)
+    } catch (error) {
+        console.log(error)
+    }
+})
+
+app.post('/conseguirId', async function(req,res){
+    try {
+        const respuesta = await realizarQuery(`
+            SELECT id FROM Usuarios WHERE usuario = '${req.body.usuario}'    
+        `)
+        console.log(respuesta)
+        res.send(respuesta)
+    } catch (error) {
+        console.log(error)
+    }
+})
+
+app.post('/esAdmin', async function(req,res){
+    try {
+        const respuesta = await realizarQuery(`
+            SELECT es_admin FROM Usuarios WHERE usuario = '${req.body.usuario}'    
+        `)
+        console.log(respuesta)
+        res.send(respuesta)
+    } catch (error) {
+        console.log(error)
+    }
+})
+
+app.post('/insertarUsuario', async function(req,res){
+    try {
+        const respuesta = await realizarQuery(`
+            INSERT INTO Usuarios (usuario, contraseña, puntaje, tiempo, es_admin)
+            VALUES ('${req.body.usuario}','${req.body.contraseña}','${req.body.puntaje}','${req.body.tiempo}','${req.body.es_admin}')
+        `)
+        res.send({mensaje: "Se inserto el Usuario, Haga el Login"})
+    } catch (error) {
+        console.log(error)
+    }
 })
 

@@ -12,7 +12,7 @@ class UserInterface {
     }
 
     setUser(username) {
-        document.getElementById("loggedUsername").textContent = `¡Bienvenido ${username}!`;
+        document.getElementById("username").textContent = `¡Bienvenido ${username}!`;
     }
 
     getPassword() {
@@ -43,15 +43,13 @@ class UserInterface {
         document.getElementById("modalTitle").textContent = title;
         document.getElementById("modalBody").textContent = body;
 
-        const modal = new bootstrap.Modal('#modal', {
+        const modal = new bootstrap.Modal(document.getElementById("modal"), {
             keyboard: true,
             focus: true
         });
 
         modal.show();
-    }   
-
-    
+    } 
 }
 
 const ui = new UserInterface();

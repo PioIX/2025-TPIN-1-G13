@@ -163,111 +163,159 @@ let idLogged = -1
 
 // LOGIN  !!!!!!!!!!!
 async function existsUser (nombre,password) { 
-    let hola = 10
-    console.log(hola)
-    const respuesta = await fetch(`http://localhost:4000/usuarioExiste`, {
-        method: "POST", //GET, POST, PUT o DELETE
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({usuario: nombre, contraseña: password}),    
-    })
-    let result = await respuesta.json()
-    console.log(result)
-    return result
+    try {
+        const respuesta = await fetch(`http://localhost:4001/usuarioExiste`, {
+            method: "POST", //GET, POST, PUT o DELETE
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({usuario: nombre, contraseña: password}),    
+        })
+        let result = await respuesta.json()
+        console.log(result)
+        return result
+    } catch (error) {
+        console.log(error)
+    }
 }
 
 async function conseguirID(nombre) {
-    const respuesta = await fetch(`http://localhost:4000/conseguirId`, {
-        method: "POST", //GET, POST, PUT o DELETE
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({usuario: nombre})
-
-    })
-    let result = await respuesta.json()
-    console.log(result)
-    return result
+    try {
+        const respuesta = await fetch(`http://localhost:4001/conseguirId`, {
+            method: "POST", //GET, POST, PUT o DELETE
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({usuario: nombre})
+    
+        })
+        let result = await respuesta.json()
+        console.log(result)
+        return result
+    } catch (error) {
+        console.log(error)
+    }
 }
 
 async function esAdmin(nombre) {
-    const respuesta = await fetch(`http://localhost:4000/esAdmin`, {
-        method: "POST", //GET, POST, PUT o DELETE
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({usuario: nombre})
-
-    })
-    let result = await respuesta.json()
-    console.log(result)
-    return result
+    try {
+        const respuesta = await fetch(`http://localhost:4001/esAdmin`, {
+            method: "POST", //GET, POST, PUT o DELETE
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({usuario: nombre})
+    
+        })
+        let result = await respuesta.json()
+        console.log(result)
+        if (result.length > 0) {
+            return result[0].es_admin; // ✅ devolvemos solo el número
+        } else {
+            return null; // o null, según cómo quieras manejar errores
+        }
+    } catch (error) {
+        console.log(error)
+    }
 }
 
 async function login() {
-    let nombre = ui.getUser(); 
-    let password = ui.getPassword();
-    console.log(nombre, password)
-    let resultado = await existsUser(nombre, password) 
-    console.log(resultado)
-    if (resultado.length > 0) {  // SEGUIR SISTEMA DE LENGHT PARA USUARIOS
-        idLogged = conseguirID(nombre);
-        let admin = esAdmin(nombre)
-        if (admin === true) {
-            /*
-            ui.setUser(nombre)
-            ui.changeScreenAdmin()*/
+    try {
+        let nombre = ui.getUser(); 
+        let password = ui.getPassword();
+        let resultado = await existsUser(nombre, password) 
+        console.log(resultado)
+        if (resultado.length > 0) {  // SEGUIR SISTEMA DE LENGHT PARA USUARIOS
+            idLogged = await conseguirID(nombre);
+            console.log(idLogged)
+            let admin = await esAdmin(nombre)
+            console.log(admin)
+            if (admin > 0) {
+                ui.clearLoginInputs()
+                console.log("soy admin")
+                console.log("USTED INGRESO AL JUEGO")
+                ui.showModal("INGRESO")
+                /*
+                ui.setUser(nombre)
+                ui.changeScreenAdmin()*/
+            } else {
+                ui.clearLoginInputs()
+                console.log("no soy admin")
+                console.log("USTED INGRESO AL JUEGO")
+                ui.showModal("INGRESO")
+    
+                /*ui.setUser(nombre);
+                ui.changeScreen();*/
+            }
         } else {
-            /*ui.setUser(nombre);
-            ui.changeScreen();*/
+            console.log("NO PUDO INGRESAR AL JUEGO")
+            ui.clearLoginInputs()
+            ui.showModal("Usuario o contraseña son incorrectos")
+            idLogged = -1;
         }
-    } else {
-        ui.showModal("Usuario o contraseña son incorrectos")
-        idLogged = -1;
+    } catch (error) {
+        console.log(error)
     }
 }
 
 // REGISTER !!!!!!!!!!!!
 
 async function conseguirDatos(nombre, password) {
-    let datos = {
-        usuario: nombre,
-        contraseña: password,
-        puntaje: 0,
-        tiempo: 0,
-        es_admin: false
+    try {
+        let datos = {
+            usuario: nombre,
+            contraseña: password,
+            puntaje: 0,
+            tiempo: 0,
+            es_admin: 0
+        }
+        console.log(datos)
+        return datos
+    } catch (error) {
+        console.log(error)
     }
-    return datos
 }
 
 async function newuser(nombre, password) {
-    let resultado = existsUser(nombre, password)
-    if (resultado <= 0) {
-            let datos = conseguirDatos(nombre, password)
-            const response = await fetch(`http://localhost:4000/insertarUsuario`, {
-            method: "POST", //GET, POST, PUT o DELETE
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(datos)
-        })
-        let result = await response.json()
-        console.log(result)
-        return 1
-    } else {
-            return -1;
-        }
+    try {
+        let resultado = await existsUser(nombre, password)
+        console.log(resultado)
+        if (resultado.length == 0) {
+                console.log("hola")
+                let datos = await conseguirDatos(nombre, password)
+                const response = await fetch(`http://localhost:4001/insertarUsuario`, {
+                method: "POST", //GET, POST, PUT o DELETE
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(datos)
+            })
+            let result = await response.json()
+            console.log(result)
+            return 1
+        } else {
+                return -1;
+            }
+    } catch (error) {
+        console.log(error)
+    }
 }
             
 async function registrar() {
-    let nombre = ui.getUser();
-    let password = ui.getPassword()
-    let creado = newuser(nombre, password)
-    if (creado > 0) {
-        ui.showModal("Usuario creado, haga el login por favor")
-    } else {
-        showModal("Usuario existente, cree uno con distinto usuario porfavor")
+    try {
+        let nombre = ui.getUser();
+        let password = ui.getPassword()
+        console.log(nombre, password)
+        let creado = await newuser(nombre, password)
+        if (creado > 0) {
+            ui.clearLoginInputs()
+            ui.showModal("Usuario creado, haga el login por favor")
+        } else {
+            ui.clearLoginInputs()
+            ui.showModal("Usuario existente, cree uno con distinto usuario porfavor")
+        }
+    } catch (error) {
+        console.log(error)
     }
 }
 
