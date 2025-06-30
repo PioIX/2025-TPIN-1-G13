@@ -243,7 +243,7 @@ async function login() {
                 console.log("no soy admin")
                 console.log("USTED INGRESO AL JUEGO")
                 ui.showModal("INGRESO")
-    
+                
                 /*ui.setUser(nombre);
                 ui.changeScreen();*/
             }
