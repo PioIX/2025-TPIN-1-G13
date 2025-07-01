@@ -9,14 +9,14 @@
 </head>
 
 <body>
-    <nav class="navbar">
+    <nav class="navbar" id="barra" style="display: block;">
         <div class="contenedorNav">
             <div class="Titulos">
                 <h4>
                     TP PREGUNTADOS Alumnos: Facundo Suárez - Agustín Putrino - Francisco Manzanares - Juan Ignacio Nastasi
                 </h4>
                 <h5>
-                    5to Informática 2025 - Colegio Pio IX - Profesores: Nicolás Facón y Matías Marchesi
+                    5to Informática 2025 - Colegio Pio IX - Profesores: Nicolás Facón - Matías Marchesi - Martin Rivas
                 </h5>
             </div>
         </div>
@@ -45,17 +45,53 @@
                 </div>
             </div>
         </section>
-        <section class="ParteAdmin" id="admin">
-            
+        <section class="ParteAdmin" id="admin" style="display: none;">
+            <h2>Panel de Administración</h2>
+
+            <div class="admin-buttons">
+                <button onclick="ui.mostrarSeccion('agregarPregunta')">Agregar Pregunta</button>
+                <button onclick="ui.mostrarSeccion('editarPregunta')">Editar Pregunta</button>
+                <button onclick="ui.mostrarSeccion('eliminarPregunta')">Eliminar Pregunta</button>
+                <button onclick="ui.mostrarSeccion('eliminarUsuario')">Eliminar Usuario</button>
+                <button onclick="ui.mostrarSeccion('eliminarPuntajes')">Eliminar Puntajes</button>
+            </div>
+
+            <!-- Secciones que se mostrarán dinámicamente -->
+            <div id="agregarPregunta" class="admin-seccion" style="display:none;">
+                <h3>Agregar Pregunta</h3>
+                <input type="text" id="pregunta" placeholder="Escriba la pregunta">
+                <input type="text" id="categoria" placeholder="¿A qué categoría pertenece?">
+                <button onclick="postPregunta()">Mandar pregunta a BD</button>
+            </div>
+
+            <div id="editarPregunta" class="admin-seccion" style="display:none;">
+                <h3>Editar Pregunta</h3>
+                <!-- Agregá selección de pregunta y edición -->
+            </div>
+
+            <div id="eliminarPregunta" class="admin-seccion" style="display:none;">
+                <h3>Eliminar Pregunta</h3>
+                <!-- Lista de preguntas para eliminar -->
+            </div>
+
+            <div id="eliminarUsuario" class="admin-seccion" style="display:none;">
+                <h3>Eliminar Usuario</h3>
+                <!-- Lista de usuarios o búsqueda -->
+            </div>
+
+            <div id="eliminarPuntajes" class="admin-seccion" style="display:none;">
+                <h3>Eliminar Puntajes</h3>
+                <!-- Lista de puntajes -->
+            </div>
         </section>
-        <section class="ContenedorJuego" id="notepad">
-            
+        <section class="ContenedorJuego" id="notepad" style="display: none;">
+            <h2>JUEGAZO</h2>
         </section>
     </main>
     <footer hidden>
         <p>Este es el footer</p>
     </footer>
-    <div id="modal" class="modal fade" tabindex="-1" hidden>
+    <div id="modal" class="modal fade" tabindex="-1" style="display: none;">
         <div class="modal-dialog modal-dialog-centered">
             <div class="area">
                 <div class="modal-content">

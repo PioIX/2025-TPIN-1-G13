@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "pio": "nodemon --env-file=.pio.env index.js",
-    "home": "nodemon --env-file=.home.env index.js"
+    "home": "nodemon --env-file=.home.env index.js",
+    "dev": "nodemon server.js"
   },
   "keywords": [
     "ES"

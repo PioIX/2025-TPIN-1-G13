@@ -8,7 +8,7 @@
 /* FONDO GENERAL */
 body {
     background: linear-gradient(to right, #ffecd2, #fcb69f);
-    min-height: 50vh;
+    min-height: 25vh;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -189,4 +189,46 @@ footer {
     color: white;
     font-weight: bold;
     box-shadow: 0 -4px 8px rgba(0,0,0,0.2);
+}
+
+
+/* SECCION ADMIN */
+
+.ParteAdmin{
+    display: none;
+    text-align: center;
+}
+
+.admin-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.admin-buttons button {
+    padding: 10px 15px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.admin-buttons button:hover {
+    background-color: #0056b3;
+}
+
+.admin-seccion {
+    border: 1px solid #ccc;
+    padding: 15px;
+    border-radius: 6px;
+    background-color: #f9f9f9;
+}
+
+
+/*parte juego*/
+
+.ContenedorJuego{
+    display: none;
 }

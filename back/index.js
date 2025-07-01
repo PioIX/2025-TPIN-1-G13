@@ -4,7 +4,7 @@ var cors = require('cors');
 const { realizarQuery } = require('./modulos/mysql');
 
 var app = express(); //Inicializo express
-var port = process.env.PORT || 4001; //Ejecuto el servidor en el puerto 3000
+var port = process.env.PORT || 4003; //Ejecuto el servidor en el puerto 3000
 
 // Convierte una petición recibida (POST-GET...) a objeto JSON
 app.use(bodyParser.urlencoded({extended:false}));
@@ -433,6 +433,20 @@ app.post('/insertarUsuario', async function(req,res){
             VALUES ('${req.body.usuario}','${req.body.contraseña}','${req.body.puntaje}','${req.body.tiempo}','${req.body.es_admin}')
         `)
         res.send({mensaje: "Se inserto el Usuario, Haga el Login"})
+    } catch (error) {
+        console.log(error)
+    }
+})
+
+// PREGUNTAS
+
+app.post('/subirPregunta', async function(req,res){
+    try {
+        const respuesta = await realizarQuery(`
+            INSERT INTO Preguntas (pregunta, categoria)
+            VALUES ('${req.body.pregunta}','${req.body.categoria}')
+        `)
+        res.send({mensaje: "Se insertó la pregunta"})
     } catch (error) {
         console.log(error)
     }

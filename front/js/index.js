@@ -164,7 +164,7 @@ let idLogged = -1
 // LOGIN  !!!!!!!!!!!
 async function existsUser (nombre,password) { 
     try {
-        const respuesta = await fetch(`http://localhost:4001/usuarioExiste`, {
+        const respuesta = await fetch(`http://localhost:4003/usuarioExiste`, {
             method: "POST", //GET, POST, PUT o DELETE
             headers: {
                 "Content-Type": "application/json",
@@ -181,7 +181,7 @@ async function existsUser (nombre,password) {
 
 async function conseguirID(nombre) {
     try {
-        const respuesta = await fetch(`http://localhost:4001/conseguirId`, {
+        const respuesta = await fetch(`http://localhost:4003/conseguirId`, {
             method: "POST", //GET, POST, PUT o DELETE
             headers: {
                 "Content-Type": "application/json",
@@ -199,7 +199,7 @@ async function conseguirID(nombre) {
 
 async function esAdmin(nombre) {
     try {
-        const respuesta = await fetch(`http://localhost:4001/esAdmin`, {
+        const respuesta = await fetch(`http://localhost:4003/esAdmin`, {
             method: "POST", //GET, POST, PUT o DELETE
             headers: {
                 "Content-Type": "application/json",
@@ -234,18 +234,14 @@ async function login() {
                 ui.clearLoginInputs()
                 console.log("soy admin")
                 console.log("USTED INGRESO AL JUEGO")
-                ui.showModal("INGRESO")
-                /*
-                ui.setUser(nombre)
-                ui.changeScreenAdmin()*/
+                // ui.setUser(nombre)
+                ui.changeScreenAdmin()
             } else {
                 ui.clearLoginInputs()
                 console.log("no soy admin")
                 console.log("USTED INGRESO AL JUEGO")
-                ui.showModal("INGRESO")
-                
-                /*ui.setUser(nombre);
-                ui.changeScreen();*/
+                ui.changeScreen()
+                // ui.setuser()
             }
         } else {
             console.log("NO PUDO INGRESAR AL JUEGO")
@@ -283,12 +279,12 @@ async function newuser(nombre, password) {
         if (resultado.length == 0) {
                 console.log("hola")
                 let datos = await conseguirDatos(nombre, password)
-                const response = await fetch(`http://localhost:4001/insertarUsuario`, {
-                method: "POST", //GET, POST, PUT o DELETE
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(datos)
+                const response = await fetch(`http://localhost:4003/insertarUsuario`, {
+                    method: "POST", //GET, POST, PUT o DELETE
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(datos)
             })
             let result = await response.json()
             console.log(result)
@@ -318,6 +314,33 @@ async function registrar() {
         console.log(error)
     }
 }
+
+// PREGUNTAS
+
+async function datosPregunta() {
+    let datos = {
+        pregunta: ui.getPregunta(),
+        categoria: ui.getCategoria()
+    }
+    return datos
+}
+
+async function postPregunta() {
+    let datos = await datosPregunta()
+    console.log(datos)
+    const response = await fetch(`http://localhost:4003/subirPregunta`, {
+        method: "POST", //GET, POST, PUT o DELETE
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(datos)
+    })
+    let result = await response.json()
+    console.log(result)
+    ui.showModal("Pregunta subida con éxito")
+}
+
+
 
 
 // CERRAR SESION !!!!!!!!
