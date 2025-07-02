@@ -69,8 +69,12 @@
                 <!-- Agregá selección de pregunta y edición -->
             </div>
 
-            <div id="eliminarPregunta" class="admin-seccion" style="display:none;">
+            <div id="eliminarPregunta" class="admin-seccion" style="display:none;" onload="llenarSelectPreguntaEliminar()">
                 <h3>Eliminar Pregunta</h3>
+                <select id="SelectPreguntaEliminar">
+
+                </select>
+                <button onclick="eliminarPregunta()">ELIMINAR DE LA BD</button>
                 <!-- Lista de preguntas para eliminar -->
             </div>
 

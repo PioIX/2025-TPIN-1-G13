@@ -340,8 +340,40 @@ async function postPregunta() {
     ui.showModal("Pregunta subida con éxito")
 }
 
+async function conseguirPregunta(){
+    const response = await fetch(`http://localhost:4003/preguntas`, {
+        method: "GET", //GET, POST, PUT o DELETE
+        headers: {
+            "Content-Type": "application/json",
+        },
+    })
+    let result = await response.json()
+    return result
+}
 
+async function llenarSelectPreguntaEliminar() {
+    let preguntas = await conseguirPregunta()
+    console.log(preguntas)
 
+    let selectPregunta = ``
+    for (let i = 0; i < preguntas.length; i++) {
+        selectPregunta += `<option>${preguntas[i].id_pregunta}</option>`
+    }
+
+    document.getElementById("SelectPreguntaEliminar").innerHTML += selectPregunta
+}
+
+async function eliminarPregunta() {
+    let id = document.getElementById("SelectPreguntaEliminar").value
+    const response = await fetch(`http://localhost:4003/EliminarPregunta`, {
+        method: "DELETE", //GET, POST, PUT o DELETE
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: ({id_pregunta: id})
+    },
+    ui.showModal("Pregunta Eliminada")
+)}
 
 // CERRAR SESION !!!!!!!!
 function cerrarsesion(){

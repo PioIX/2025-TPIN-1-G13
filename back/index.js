@@ -386,6 +386,20 @@ app.get('/usuarios', async function(req, res){
     }
 })
 
+app.get('/preguntas', async function(req, res){
+    try {
+        console.log(req.query);
+        const preguntas = await realizarQuery(`
+        SELECT * FROM Preguntas;
+        `)
+        console.log({preguntas})
+        res.send(preguntas)
+    } catch (error) {
+        console.log(error)
+    }
+})
+
+
 
 // --------------------------------- LOGIN ----------------------------------------------------------------------------------------
 
@@ -451,4 +465,16 @@ app.post('/subirPregunta', async function(req,res){
         console.log(error)
     }
 })
+
+app.delete('/EliminarPregunta', async function(req,res){
+    try {
+        const respuesta = await realizarQuery(`
+            DELETE FROM Preguntas WHERE id_pregunta = ${req.query.id_pregunta}
+        `)
+        res.send({mensaje: "Se Elimino la pregunta"})
+    } catch (error) {
+        console.log(error)
+    }
+})
+
 
