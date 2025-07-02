@@ -375,6 +375,16 @@ async function eliminarPregunta() {
     ui.showModal("Pregunta Eliminada")
 )}
 
+
+/*-------------------------------------------------------------------------------------------------------------------------------------*/
+
+async function editarPregunta() {
+ 
+}
+
+/*-------------------------------------------------------------------------------------------------------------------------------*/
+
+
 // CERRAR SESION !!!!!!!!
 function cerrarsesion(){
     if (confirm("¿Queres cerrar sesion?") == true) {

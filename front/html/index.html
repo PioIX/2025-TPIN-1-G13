@@ -13,7 +13,8 @@
         <div class="contenedorNav">
             <div class="Titulos">
                 <h4>
-                    TP PREGUNTADOS Alumnos: Facundo Suárez - Agustín Putrino - Francisco Manzanares - Juan Ignacio Nastasi
+                    TP PREGUNTADOS Alumnos: Facundo Suárez - Agustín Putrino - Francisco Manzanares - Juan Ignacio
+                    Nastasi
                 </h4>
                 <h5>
                     5to Informática 2025 - Colegio Pio IX - Profesores: Nicolás Facón - Matías Marchesi - Martin Rivas
@@ -35,12 +36,10 @@
                 </div>
                 <div class="botones">
                     <div class="botonLogin">
-                    <button class="botonLoginReal" onclick="login()"
-                        title="Iniciar sesión">Iniciar sesión</button>
+                        <button class="botonLoginReal" onclick="login()" title="Iniciar sesión">Iniciar sesión</button>
                     </div>
                     <div class="botonRegister">
-                    <button class="botonRegisterReal" onclick="registrar()"
-                        title="Registrarse">Registrarse</button>
+                        <button class="botonRegisterReal" onclick="registrar()" title="Registrarse">Registrarse</button>
                     </div>
                 </div>
             </div>
@@ -66,7 +65,15 @@
 
             <div id="editarPregunta" class="admin-seccion" style="display:none;">
                 <h3>Editar Pregunta</h3>
-                <!-- Agregá selección de pregunta y edición -->
+                <label for="selectPregunta">Elegí la pregunta a editar:</label>
+                <select id="selectPregunta"></select>
+
+                <input type="text" id="preguntaNueva" placeholder="Nuevo texto de la pregunta (o dejá vacío)">
+                <input type="text" id="categoriaNueva" placeholder="Nueva categoría (o dejá vacío)">
+
+                <button onclick="editarPregunta()">Guardar cambios</button>
+            </div>
+
             </div>
 
             <div id="eliminarPregunta" class="admin-seccion" style="display:none;" onload="llenarSelectPreguntaEliminar()">
@@ -118,8 +125,5 @@
 </body>
 <script src="../js/dom.js"></script>
 <script src="../js/index.js"></script>
+
 </html>
-
-
-
-

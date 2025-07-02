@@ -58,6 +58,7 @@ class UserInterface {
         secciones.forEach(sec => {
             sec.style.display = (sec.id === id) ? 'block' : 'none';
         }); 
+        
     }
 
     getPregunta() {
