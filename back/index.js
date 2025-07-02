@@ -386,15 +386,7 @@ app.get('/usuarios', async function(req, res){
     }
 })
 
-// GET /preguntas – devuelve todas las preguntas con su id
-app.get("/preguntas", async (req, res) => {
-    try {
-        const preguntas = await db.query("SELECT id_pregunta, pregunta, categoria FROM preguntas");
-        res.json(preguntas.rows);  // o preguntas si no usás pg
-    } catch (err) {
-        res.status(500).json({ error: "Error al obtener preguntas" });
-    }
-});
+
 
 
 
@@ -462,4 +454,16 @@ app.post('/subirPregunta', async function(req,res){
         console.log(error)
     }
 })
+
+app.delete('/EliminarPregunta', async function(req,res){
+    try {
+        const respuesta = await realizarQuery(`
+            DELETE FROM Preguntas WHERE id_pregunta = ${req.query.id_pregunta}
+        `)
+        res.send({mensaje: "Se Elimino la pregunta"})
+    } catch (error) {
+        console.log(error)
+    }
+})
+
 

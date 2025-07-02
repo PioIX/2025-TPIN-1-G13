@@ -226,6 +226,11 @@ footer {
     background-color: #f9f9f9;
 }
 
+.admin-seccion button{
+    background-color: palevioletred;
+    font-size: 1rem;
+    color: white;
+}
 
 /*parte juego*/
 
