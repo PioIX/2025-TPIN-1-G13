@@ -60,7 +60,16 @@
                 <h3>Agregar Pregunta</h3>
                 <input type="text" id="pregunta" placeholder="Escriba la pregunta">
                 <input type="text" id="categoria" placeholder="¿A qué categoría pertenece?">
-                <button onclick="postPregunta()">Mandar pregunta a BD</button>
+
+                <input type="text" id="opcionUno" placeholder="Escriba la primera opcion">
+                <input type="text" id="opcionDos" placeholder="Escriba la segunda opcion">
+                <input type="text" id="opcionTres" placeholder="Escriba la tercera opcion">
+                <input type="text" id="opcionCuatro" placeholder="Escriba la cuarta opcion">
+
+                <!--HAY QUE HACER QUE SE MANDEN LAS PREGUNTAS Y QUE COINCIDAN CON EL ID XD TAREA LARGA-->
+                <button onclick="postPregunta()">Mandar pregunta y respuestas a BD</button>
+
+
             </div>
 
             <div id="editarPregunta" class="admin-seccion" style="display:none;">
@@ -76,7 +85,7 @@
 
             </div>
 
-            <div id="eliminarPregunta" class="admin-seccion" style="display:none;" onload="llenarSelectPreguntaEliminar()">
+            <div id="eliminarPregunta" class="admin-seccion" style="display:none;">
                 <h3>Eliminar Pregunta</h3>
                 <select id="SelectPreguntaEliminar">
 
@@ -96,7 +105,68 @@
             </div>
         </section>
         <section class="ContenedorJuego" id="notepad" style="display: none;">
-            <h2>JUEGAZO</h2>
+            <h2>PREGUNTADOS</h2>
+            <div id="cuerpo">
+                <header id="header">
+                <label class="pos1">PREGUNTADOS</label>
+                    <div class="tab">
+                        <button class="tablinks seccion" onclick="openbtt(event, 'juego')">Juego</button>
+                        <button class="tablinks seccion" onclick="openbtt(event, 'comoJugar')">Cómo jugar</button>
+                        <button class="tablinks seccion" onclick="openbtt(event, 'reglas')">Reglas</button>
+                        <button class="tablinks seccion" onclick="openbtt(event, 'estadisticas')">Estadísticas</button>
+                    </div>
+                </header>
+                <div class="menu2" id="menu2">
+                    <label class="pos1">PREGUNTADOS</label>
+                </div>
+                <div id="juego" class="tabcontent e">
+                    <div id="finDelJuego" class="contenedor"></div>
+                    <div class="mensajeInicio" id="mensajeInicio">
+                        <label>Antes de comenzar el juego, te recomendamos leer las reglas, las estadísticas y aprender a cómo jugarlo</label>
+                    </div>
+                    <div class="contenedor" id="seleccion">
+                        <div class="aleatorio" id="aleatorio">
+                            <label>Presione el botón para que le toque una categoría aleatoria</label>
+                            <button class="comenzar" onclick="categoria()">CATEGORÍA</button>
+                            <img src="../IMAGES/preguntados.png" alt="icono preguntados" width="90px" height="90px">
+                        </div>
+                        <div class="container" id="logo">
+                            <div class="loader">
+                                <div class="category ent"></div>
+                                <div class="category geo"></div>
+                                <div class="category science"></div>
+                                <div class="category history"></div>
+                                <div class="category sports"></div>
+                                <div class="category art"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="contenedor" id="seleccionRealizada"></div>
+                </div>
+                <div id="preguntas" class="contPreg">
+                    <div id="myProgress">
+                        <div id="myBar"></div>
+                    </div>
+                    <div id="nombrePuntos" class="nombrePuntos"></div>
+                    <div class="contenedor2" id="contenedorPregunta">
+                        <div id="preguntaPrimeraParte"></div>
+                        <div id="preguntaImagen"></div>
+                        <div id="preguntaEscrito"></div>
+                    </div>
+                    <div class="resultado" id="resultado"></div>
+                </div>
+                <div id="comoJugar" class="tabcontent">
+                    <div class="contenedor2" id="cargarComoJugar"></div>
+                </div>
+                <div id="reglas" class="tabcontent">
+                    <div class="contenedor2">
+                        <img src="../IMAGES/reglas.png" alt="reglas" width="400px" height="260px">
+                    </div>
+                </div>
+                <div id="estadisticas" class="tabcontent">
+                    <div class="contenedor2" id="cargarEstadisticas"></div>
+                </div>
+            </div>
         </section>
     </main>
     <footer hidden>
@@ -122,6 +192,12 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
         crossorigin="anonymous"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            llenarSelectPreguntaEliminar();
+
+        });
+</script>
 </body>
 <script src="../js/dom.js"></script>
 <script src="../js/index.js"></script>

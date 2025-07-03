@@ -357,7 +357,7 @@ async function llenarSelectPreguntaEliminar() {
 
     let selectPregunta = ``
     for (let i = 0; i < preguntas.length; i++) {
-        selectPregunta += `<option>${preguntas[i].id_pregunta}</option>`
+        selectPregunta += `<option>${preguntas[i].id_pregunta + " - " + preguntas[i].pregunta}</option>`
     }
 
     document.getElementById("SelectPreguntaEliminar").innerHTML += selectPregunta

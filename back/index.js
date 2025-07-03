@@ -467,3 +467,15 @@ app.delete('/EliminarPregunta', async function(req,res){
 })
 
 
+app.get('/preguntas', async function(req, res){
+    try {
+        console.log(req.query);
+        const preguntas = await realizarQuery(`
+        SELECT * FROM Preguntas;
+        `)
+        console.log({preguntas})
+        res.send(preguntas)
+    } catch (error) {
+        console.log(error)
+    }
+})

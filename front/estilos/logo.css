@@ -1,0 +1,519 @@
+.container {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-top: -40px;
+    margin-left: -40px;
+}
+
+.loader {
+    width: 80px;
+    height: 80px;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: 70% auto;
+    border-radius: 100px;
+    -webkit-animation: spinner 5s infinite;
+    animation: spinner 5s infinite;
+}
+
+.loader>.category {
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: 70% auto;
+    opacity: 0;
+    color: #fff;
+}
+
+.loader>.ent {
+    background-image: url('https://i.imgur.com/8V9tnRm.png');
+    opacity: 1;
+    -webkit-animation: spinner-ent 5s infinite;
+    animation: spinner-ent 5s infinite;
+}
+
+.loader>.geo {
+    background-image: url('https://i.imgur.com/fGnYOxv.png');
+    -webkit-animation: spinner-geo 5s infinite;
+    animation: spinner-geo 5s infinite;
+}
+
+.loader>.science {
+    background-image: url('https://i.imgur.com/hSIdMH3.png');
+    -webkit-animation: spinner-science 5s infinite;
+    animation: spinner-science 5s infinite;
+}
+
+.loader>.history {
+    background-image: url('https://i.imgur.com/yT2PGks.png');
+    -webkit-animation: spinner-history 5s infinite;
+    animation: spinner-history 5s infinite;
+}
+
+.loader>.sports {
+    background-image: url('https://i.imgur.com/4B8k32E.png');
+    -webkit-animation: spinner-sports 5s infinite;
+    animation: spinner-sports 5s infinite;
+}
+
+.loader>.art {
+    background-image: url('https://i.imgur.com/0gpfZZI.png');
+    -webkit-animation: spinner-art 5s infinite;
+    animation: spinner-art 5s infinite;
+}
+
+@-webkit-keyframes spinner {
+    from {
+        transform: scale(1) rotate(360deg);
+        -webkit-transform: scale(1) rotate(360deg);
+        background-color: #ee3c80;
+    }
+    8% {
+        transform: scale(0.8) rotate(720deg);
+        -webkit-transform: scale(0.8) rotate(720deg);
+        background-color: #1055b1;
+    }
+    17% {
+        transform: scale(1) rotate(1080deg);
+        -webkit-transform: scale(1) rotate(1080deg);
+        background-color: #1055b1;
+    }
+    25% {
+        transform: scale(0.8) rotate(1440deg);
+        -webkit-transform: scale(0.8) rotate(1440deg);
+        background-color: #17a84b;
+    }
+    34% {
+        transform: scale(1) rotate(1800deg);
+        -webkit-transform: scale(1) rotate(1800deg);
+        background-color: #17a84b;
+    }
+    42% {
+        transform: scale(0.8) rotate(2160deg);
+        -webkit-transform: scale(0.8) rotate(2160deg);
+        background-color: #f6c92f;
+    }
+    51% {
+        transform: scale(1) rotate(2520deg);
+        -webkit-transform: scale(1) rotate(2520deg);
+        background-color: #f6c92f;
+    }
+    59% {
+        transform: scale(0.8) rotate(2880deg);
+        -webkit-transform: scale(0.8) rotate(2880deg);
+        background-color: #ff6c00;
+    }
+    67% {
+        transform: scale(1) rotate(3240deg);
+        -webkit-transform: scale(1) rotate(3240deg);
+        background-color: #ff6c00;
+    }
+    75% {
+        transform: scale(0.8) rotate(3600deg);
+        -webkit-transform: scale(0.8) rotate(3600deg);
+        background-color: #ed1c24;
+    }
+    84% {
+        transform: scale(1) rotate(3960deg);
+        -webkit-transform: scale(1) rotate(3960deg);
+        background-color: #ed1c24;
+    }
+    92% {
+        transform: scale(0.8) rotate(4320deg);
+        -webkit-transform: scale(0.8) rotate(4320deg);
+        background-color: #ee3c80;
+    }
+    to {
+        transform: scale(1) rotate(4680deg);
+        -webkit-transform: scale(1) rotate(4680deg);
+        background-color: #ee3c80;
+    }
+}
+
+@-moz-keyframes spinner {
+    from {
+        transform: scale(1) rotate(360deg);
+        -webkit-transform: scale(1) rotate(360deg);
+        background-color: #ee3c80;
+    }
+    8% {
+        transform: scale(0.8) rotate(720deg);
+        -webkit-transform: scale(0.8) rotate(720deg);
+        background-color: #1055b1;
+    }
+    17% {
+        transform: scale(1) rotate(1080deg);
+        -webkit-transform: scale(1) rotate(1080deg);
+        background-color: #1055b1;
+    }
+    25% {
+        transform: scale(0.8) rotate(1440deg);
+        -webkit-transform: scale(0.8) rotate(1440deg);
+        background-color: #17a84b;
+    }
+    34% {
+        transform: scale(1) rotate(1800deg);
+        -webkit-transform: scale(1) rotate(1800deg);
+        background-color: #17a84b;
+    }
+    42% {
+        transform: scale(0.8) rotate(2160deg);
+        -webkit-transform: scale(0.8) rotate(2160deg);
+        background-color: #f6c92f;
+    }
+    51% {
+        transform: scale(1) rotate(2520deg);
+        -webkit-transform: scale(1) rotate(2520deg);
+        background-color: #f6c92f;
+    }
+    59% {
+        transform: scale(0.8) rotate(2880deg);
+        -webkit-transform: scale(0.8) rotate(2880deg);
+        background-color: #ff6c00;
+    }
+    67% {
+        transform: scale(1) rotate(3240deg);
+        -webkit-transform: scale(1) rotate(3240deg);
+        background-color: #ff6c00;
+    }
+    75% {
+        transform: scale(0.8) rotate(3600deg);
+        -webkit-transform: scale(0.8) rotate(3600deg);
+        background-color: #ed1c24;
+    }
+    84% {
+        transform: scale(1) rotate(3960deg);
+        -webkit-transform: scale(1) rotate(3960deg);
+        background-color: #ed1c24;
+    }
+    92% {
+        transform: scale(0.8) rotate(4320deg);
+        -webkit-transform: scale(0.8) rotate(4320deg);
+        background-color: #ee3c80;
+    }
+    to {
+        transform: scale(1) rotate(4680deg);
+        -webkit-transform: scale(1) rotate(4680deg);
+        background-color: #ee3c80;
+    }
+}
+
+@keyframes spinner {
+    from {
+        transform: scale(1) rotate(360deg);
+        -webkit-transform: scale(1) rotate(360deg);
+        background-color: #ee3c80;
+    }
+    8% {
+        transform: scale(0.8) rotate(720deg);
+        -webkit-transform: scale(0.8) rotate(720deg);
+        background-color: #1055b1;
+    }
+    17% {
+        transform: scale(1) rotate(1080deg);
+        -webkit-transform: scale(1) rotate(1080deg);
+        background-color: #1055b1;
+    }
+    25% {
+        transform: scale(0.8) rotate(1440deg);
+        -webkit-transform: scale(0.8) rotate(1440deg);
+        background-color: #17a84b;
+    }
+    34% {
+        transform: scale(1) rotate(1800deg);
+        -webkit-transform: scale(1) rotate(1800deg);
+        background-color: #17a84b;
+    }
+    42% {
+        transform: scale(0.8) rotate(2160deg);
+        -webkit-transform: scale(0.8) rotate(2160deg);
+        background-color: #f6c92f;
+    }
+    51% {
+        transform: scale(1) rotate(2520deg);
+        -webkit-transform: scale(1) rotate(2520deg);
+        background-color: #f6c92f;
+    }
+    59% {
+        transform: scale(0.8) rotate(2880deg);
+        -webkit-transform: scale(0.8) rotate(2880deg);
+        background-color: #ff6c00;
+    }
+    67% {
+        transform: scale(1) rotate(3240deg);
+        -webkit-transform: scale(1) rotate(3240deg);
+        background-color: #ff6c00;
+    }
+    75% {
+        transform: scale(0.8) rotate(3600deg);
+        -webkit-transform: scale(0.8) rotate(3600deg);
+        background-color: #ed1c24;
+    }
+    84% {
+        transform: scale(1) rotate(3960deg);
+        -webkit-transform: scale(1) rotate(3960deg);
+        background-color: #ed1c24;
+    }
+    92% {
+        transform: scale(0.8) rotate(4320deg);
+        -webkit-transform: scale(0.8) rotate(4320deg);
+        background-color: #ee3c80;
+    }
+    to {
+        transform: scale(1) rotate(4680deg);
+        -webkit-transform: scale(1) rotate(4680deg);
+        background-color: #ee3c80;
+    }
+}
+
+@-webkit-keyframes spinner-ent {
+    from {
+        opacity: 1;
+    }
+    7%,
+    92% {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@-moz-keyframes spinner-ent {
+    from {
+        opacity: 1;
+    }
+    7%,
+    92% {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes spinner-ent {
+    from {
+        opacity: 1;
+    }
+    7%,
+    92% {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@-webkit-keyframes spinner-geo {
+    from,
+    8% {
+        opacity: 0;
+    }
+    17% {
+        opacity: 1;
+    }
+    24%,
+    to {
+        opacity: 0;
+    }
+}
+
+@-moz-keyframes spinner-geo {
+    from,
+    8% {
+        opacity: 0;
+    }
+    17% {
+        opacity: 1;
+    }
+    24%,
+    to {
+        opacity: 0;
+    }
+}
+
+@keyframes spinner-geo {
+    from,
+    8% {
+        opacity: 0;
+    }
+    17% {
+        opacity: 1;
+    }
+    24%,
+    to {
+        opacity: 0;
+    }
+}
+
+@-webkit-keyframes spinner-science {
+    from,
+    25% {
+        opacity: 0;
+    }
+    34% {
+        opacity: 1;
+    }
+    41%,
+    to {
+        opacity: 0;
+    }
+}
+
+@-moz-keyframes spinner-science {
+    from,
+    25% {
+        opacity: 0;
+    }
+    34% {
+        opacity: 1;
+    }
+    41%,
+    to {
+        opacity: 0;
+    }
+}
+
+@keyframes spinner-science {
+    from,
+    25% {
+        opacity: 0;
+    }
+    34% {
+        opacity: 1;
+    }
+    41%,
+    to {
+        opacity: 0;
+    }
+}
+
+@-webkit-keyframes spinner-history {
+    from,
+    42% {
+        opacity: 0;
+    }
+    51% {
+        opacity: 1;
+    }
+    58%,
+    to {
+        opacity: 0;
+    }
+}
+
+@-moz-keyframes spinner-history {
+    from,
+    42% {
+        opacity: 0;
+    }
+    51% {
+        opacity: 1;
+    }
+    58%,
+    to {
+        opacity: 0;
+    }
+}
+
+@keyframes spinner-history {
+    from,
+    42% {
+        opacity: 0;
+    }
+    51% {
+        opacity: 1;
+    }
+    58%,
+    to {
+        opacity: 0;
+    }
+}
+
+@-webkit-keyframes spinner-sports {
+    from,
+    59% {
+        opacity: 0;
+    }
+    67% {
+        opacity: 1;
+    }
+    74%,
+    to {
+        opacity: 0;
+    }
+}
+
+@-moz-keyframes spinner-sports {
+    from,
+    59% {
+        opacity: 0;
+    }
+    67% {
+        opacity: 1;
+    }
+    74%,
+    to {
+        opacity: 0;
+    }
+}
+
+@keyframes spinner-sports {
+    from,
+    59% {
+        opacity: 0;
+    }
+    67% {
+        opacity: 1;
+    }
+    74%,
+    to {
+        opacity: 0;
+    }
+}
+
+@-webkit-keyframes spinner-art {
+    from,
+    75% {
+        opacity: 0;
+    }
+    84% {
+        opacity: 1;
+    }
+    91%,
+    to {
+        opacity: 0;
+    }
+}
+
+@-moz-keyframes spinner-art {
+    from,
+    75% {
+        opacity: 0;
+    }
+    84% {
+        opacity: 1;
+    }
+    91%,
+    to {
+        opacity: 0;
+    }
+}
+
+@keyframes spinner-art {
+    from,
+    75% {
+        opacity: 0;
+    }
+    84% {
+        opacity: 1;
+    }
+    91%,
+    to {
+        opacity: 0;
+    }
+}
