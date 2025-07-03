@@ -320,7 +320,7 @@ async function registrar() {
 async function datosPregunta() {
     let datos = {
         pregunta: ui.getPregunta(),
-        categoria: ui.getCategoria()
+        categoria: ui.getCategoria(),
     }
     return datos
 }
@@ -338,6 +338,33 @@ async function postPregunta() {
     let result = await response.json()
     console.log(result)
     ui.showModal("Pregunta subida con éxito")
+}
+
+async function conseguirIdPregunta() {
+    const response = await fetch(`http://localhost:4003/conseguirIdPregunta`, {
+        method: "GET", //GET, POST, PUT o DELETE
+        headers: {
+            "Content-Type": "application/json",
+        },
+    })
+    let result = await response.json()
+    return 
+}
+
+
+async function datosRespuesta() {
+    let id_pregunta = conseguirIdPregunta()
+
+    for (let i=0; i<= 5; i++) {
+        let datos = {
+
+        }
+    }
+}
+
+
+async function postRespuestas() {
+    let datosRespuesta = await datosRespuesta()
 }
 
 async function conseguirPregunta(){

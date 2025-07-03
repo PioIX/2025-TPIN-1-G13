@@ -60,14 +60,33 @@
                 <h3>Agregar Pregunta</h3>
                 <input type="text" id="pregunta" placeholder="Escriba la pregunta">
                 <input type="text" id="categoria" placeholder="¿A qué categoría pertenece?">
-
-                <input type="text" id="opcionUno" placeholder="Escriba la primera opcion">
-                <input type="text" id="opcionDos" placeholder="Escriba la segunda opcion">
-                <input type="text" id="opcionTres" placeholder="Escriba la tercera opcion">
-                <input type="text" id="opcionCuatro" placeholder="Escriba la cuarta opcion">
+                <h3>respuestas</h3>
+                <div class="opciones">
+                    <div id="opcion1">
+                        <input type="text" id="opcionUno" placeholder="Escriba la primera opcion">
+                        <input type="checkbox" id="opcion1">
+                    </div>
+                    <div id="opcion2">
+                        <input type="text" id="opcionDos" placeholder="Escriba la segunda opcion">
+                        <input type="checkbox" id="opcion2">
+                    </div>
+                    <div id="opcion3">
+                        <input type="text" id="opcionTres" placeholder="Escriba la tercera opcion">
+                        <input type="checkbox" id="opcion3">
+                    </div>
+                    <div id="opcion4">
+                        <input type="text" id="opcionCuatro" placeholder="Escriba la cuarta opcion">
+                        <input type="checkbox" id="opcion4">
+                    </div>
+                </div>
+                
+                
+                
+                
 
                 <!--HAY QUE HACER QUE SE MANDEN LAS PREGUNTAS Y QUE COINCIDAN CON EL ID XD TAREA LARGA-->
-                <button onclick="postPregunta()">Mandar pregunta y respuestas a BD</button>
+                <button onclick="postPregunta()">Mandar pregunta a BD</button>
+                <button onclick="postRespuesta()">Mandar respuestas a BD</button>
 
 
             </div>

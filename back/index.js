@@ -455,6 +455,8 @@ app.post('/subirPregunta', async function(req,res){
     }
 })
 
+
+
 app.delete('/EliminarPregunta', async function(req,res){
     try {
         const respuesta = await realizarQuery(`
