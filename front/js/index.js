@@ -340,32 +340,70 @@ async function postPregunta() {
     ui.showModal("Pregunta subida con éxito")
 }
 
-async function conseguirIdPregunta() {
+async function conseguirIdPregunta(pregunta) {
     const response = await fetch(`http://localhost:4003/conseguirIdPregunta`, {
-        method: "GET", //GET, POST, PUT o DELETE
+        method: "POST", //GET, POST, PUT o DELETE
         headers: {
             "Content-Type": "application/json",
         },
+        body: JSON.stringify({pregunta: pregunta})
     })
     let result = await response.json()
-    return 
-}
-
-
-async function datosRespuesta() {
-    let id_pregunta = conseguirIdPregunta()
-
-    for (let i=0; i<= 5; i++) {
-        let datos = {
-
-        }
+    console.log(result)
+    if (result.length > 0) {
+        console.log(result[0].id_pregunta)
+        return result[0].id_pregunta; // ✅ devolvemos solo el número
+    } else {
+        return -1; // o null, según cómo quieras manejar errores
     }
 }
 
 
-async function postRespuestas() {
-    let datosRespuesta = await datosRespuesta()
+async function datosRespuesta() {
+    let pregunta = ui.getPregunta();
+    let id_pregunta = await conseguirIdPregunta(pregunta);
+
+    let respuestas = [];
+
+    for (let i = 1; i <= 4; i++) {
+        // ID del input de texto
+        let inputTexto = document.getElementById(`opcion${i === 1 ? "Uno" : i === 2 ? "Dos" : i === 3 ? "Tres" : "Cuatro"}`);
+        let inputCheckbox = document.getElementById(`opcion${i}`);
+
+        // Validamos que haya algo escrito
+        if (inputTexto.value.trim() !== "") {
+            respuestas.push({
+                id_pregunta: id_pregunta,
+                correcta: inputCheckbox.checked,
+                respuesta: inputTexto.value.trim()
+            });
+        }
+    }
+
+    return respuestas;
 }
+
+
+
+async function postRespuestas() {
+        let respuestas = await datosRespuesta();
+    
+        for (let respuesta of respuestas) {
+            const response = await fetch("http://localhost:4003/subirRespuesta", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(respuesta)
+            });
+    
+            let result = await response.json();
+            console.log("Respuesta subida:", result);
+        }
+        ui.clearLoginInputs()
+        ui.showModal("Respuestas subidas con éxito - Vinculadas a la pregunta");
+} 
+
 
 async function conseguirPregunta(){
     const response = await fetch(`http://localhost:4003/preguntas`, {

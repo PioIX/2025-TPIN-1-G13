@@ -481,3 +481,30 @@ app.get('/preguntas', async function(req, res){
         console.log(error)
     }
 })
+
+app.post('/conseguirIdPregunta', async function(req,res){
+    try {
+        const respuesta = await realizarQuery(`
+            SELECT id_pregunta FROM Preguntas WHERE pregunta = '${req.body.pregunta}'    
+        `)
+        console.log(respuesta)
+        res.send(respuesta)
+    } catch (error) {
+        console.log(error)
+    }
+})
+
+
+// SUBIR RESPUESTA
+
+app.post('/subirRespuesta', async function(req,res){
+    try {
+        const respuesta = await realizarQuery(`
+            INSERT INTO Respuestas (id_pregunta, correcta, respuesta)
+            VALUES (${req.body.id_pregunta}, ${req.body.correcta}, '${req.body.respuesta}')
+        `)
+        res.send({mensaje: "Se insertó la respuesta"})
+    } catch (error) {
+        console.log(error)
+    }
+})
