@@ -5,7 +5,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link href="../estilos/styles.css" type="text/css" rel="stylesheet">
-    <title>TP PREGUNTADOS</title>
+    <title>PREGUNTADOS</title>
+    <link rel="icon" href="../IMAGES/PreguntadosLogo2024.webp" type="image/x-icon">
 </head>
 
 <body>
@@ -52,16 +53,24 @@
                 <button onclick="ui.mostrarSeccion('editarPregunta')">Editar Pregunta</button>
                 <button onclick="ui.mostrarSeccion('eliminarPregunta')">Eliminar Pregunta</button>
                 <button onclick="ui.mostrarSeccion('eliminarUsuario')">Eliminar Usuario</button>
-                <button onclick="ui.mostrarSeccion('eliminarPuntajes')">Eliminar Puntajes</button>
+                <button onclick="ui.mostrarSeccion('eliminarPuntajes')">Editar Puntajes</button>
             </div>
 
-            <!-- Secciones que se mostrarán dinámicamente -->
+            <!-- Secciones que se muestran segun el boton elegido -->
             <div id="agregarPregunta" class="admin-seccion" style="display:none;">
                 <h3>Agregar Pregunta</h3>
                 <input type="text" id="pregunta" placeholder="Escriba la pregunta">
-                <input type="text" id="categoria" placeholder="¿A qué categoría pertenece?">
+                <label>Selecciona una categoria</label>
+                <select id="categoria">
+                    <option value="Ciencia">Ciencia</option>
+                    <option value="Entretenimiento">Entretenimiento</option>
+                    <option value="Deporte">Deporte</option>
+                    <option value="Historia">Historia</option>
+                    <option value="Geografia">Geografía</option>
+                    <option value="Arte">Arte</option>
+                </select>
                 <button onclick="postPregunta()">Mandar pregunta a BD</button>
-                <h3>respuestas</h3>
+                <h3>Escriba las respuestas</h3>
                 <div class="opciones">
                     <div>
                         <input type="text" id="opcionUno" placeholder="Escriba la primera opcion">
@@ -81,26 +90,18 @@
                     </div>
                 </div>
                 <button onclick="postRespuestas()">Mandar respuestas a BD</button>
-                
-                
-                
-
-                <!--HAY QUE HACER QUE SE MANDEN LAS PREGUNTAS Y QUE COINCIDAN CON EL ID XD TAREA LARGA-->
-                
-               
-
-
             </div>
 
             <div id="editarPregunta" class="admin-seccion" style="display:none;">
                 <h3>Editar Pregunta</h3>
-                <label for="selectPregunta">Elegí la pregunta a editar:</label>
-                <select id="selectPregunta"></select>
-
-                <input type="text" id="preguntaNueva" placeholder="Nuevo texto de la pregunta (o dejá vacío)">
-                <input type="text" id="categoriaNueva" placeholder="Nueva categoría (o dejá vacío)">
-
+                <select id="SelectPreguntaEditar"></select>
+                <input type="text" id="NuevaPregunta" placeholder="Nuevo texto de la pregunta">
                 <button onclick="editarPregunta()">Guardar cambios</button>
+
+                <button onclick="buscarRespuestasDePregunta()">Buscar respuestas a esta pregunta</button>
+                <select id="SelectRespuesta"></select>
+                <input type="text" id="nuevaRespuesta" placeholder="Escriba la nueva respuesta">
+                <button onclick="editarRespuesta()">Guardar respuesta</button>
             </div>
 
             </div>
@@ -110,20 +111,27 @@
                 <select id="SelectPreguntaEliminar">
 
                 </select>
-                <button onclick="eliminarPregunta()">ELIMINAR DE LA BD</button>
-                <!-- Lista de preguntas para eliminar -->
+                <button onclick="eliminarPregunta()">Eliminar de la BD</button>
             </div>
 
             <div id="eliminarUsuario" class="admin-seccion" style="display:none;">
                 <h3>Eliminar Usuario</h3>
-                <!-- Lista de usuarios o búsqueda -->
+                <select id="SelectUsuario">
+                
+                </select>
+                <button onclick="eliminarUsuarios()">Eliminar Usuario de la BD</button>
             </div>
 
             <div id="eliminarPuntajes" class="admin-seccion" style="display:none;">
-                <h3>Eliminar Puntajes</h3>
-                <!-- Lista de puntajes -->
+                <h3>Eliminar/Editar Puntajes</h3>
+                <select id="SelectPuntaje">
+
+                </select>
+                <input id="puntajeNuevo" type="number" placeholder="Ingrese el nuevo puntaje">
+                <button onclick="EditarPuntajeUsuario()">Editar su puntaje</button>
             </div>
         </section>
+        <!-- PARTE DEL JUEGO PREGUNTADOS //////////////////////////////////////////////////////////////////-->
         <section class="ContenedorJuego" id="notepad" style="display: none;">
             <h2>PREGUNTADOS</h2>
             <div id="cuerpo">
@@ -215,7 +223,9 @@
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             llenarSelectPreguntaEliminar();
-
+            llenarSelectPreguntaEditar();
+            llenarSelectUsuarios();
+            llenarSelectUsuariosPuntaje();
         });
 </script>
 </body>

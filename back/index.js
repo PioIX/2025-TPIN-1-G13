@@ -386,9 +386,42 @@ app.get('/usuarios', async function(req, res){
     }
 })
 
+app.get('/respuestas', async function(req, res){
+    try {
+        const respuestas = await realizarQuery(`
+            SELECT * FROM Respuestas;
+            `)
+            console.log({respuestas})
+            res.send(respuestas)
+    } catch (error) {
+        console.log(error)
+    }
+})
 
+app.post('/respuestasEsp', async function(req,res){
+    try {
+        const respuestas = await realizarQuery(`
+            SELECT * FROM Respuestas WHERE id_pregunta = ${req.body.id_pregunta};
+            `)
+            console.log({respuestas})
+            res.send(respuestas)
+    } catch (error) {
+        console.log(error)
+    }
+})
 
-
+app.get('/preguntas', async function(req, res){
+    try {
+        console.log(req.query);
+        const preguntas = await realizarQuery(`
+        SELECT * FROM Preguntas;
+        `)
+        console.log({preguntas})
+        res.send(preguntas)
+    } catch (error) {
+        console.log(error)
+    }
+})
 
 // --------------------------------- LOGIN ----------------------------------------------------------------------------------------
 
@@ -429,6 +462,22 @@ app.post('/esAdmin', async function(req,res){
     }
 })
 
+
+// REGISTER -------------------------------------------------------------------------------------------------------------------
+
+app.post('/usuarioExisteRegistro', async function(req,res){
+    try {
+        console.log("Recibido:", req.body.usuario);
+        const usuario = await realizarQuery(`
+            SELECT * FROM Usuarios WHERE usuario = '${req.body.usuario}'
+        `)
+        console.log(usuario)
+        res.send(usuario)
+    } catch (error) {
+        console.log(error)
+    }
+})
+
 app.post('/insertarUsuario', async function(req,res){
     try {
         const respuesta = await realizarQuery(`
@@ -441,7 +490,30 @@ app.post('/insertarUsuario', async function(req,res){
     }
 })
 
-// PREGUNTAS
+// Usuarios -----------------------------------------------------------------------------------------------------------------------
+
+app.delete('/EliminarUsuario', async function(req,res){
+    try {
+        const respuesta = await realizarQuery(`
+            DELETE FROM Usuarios WHERE id = ${req.body.id}
+        `)
+        res.send({mensaje: "Se Elimino el usuario"})
+    } catch (error) {
+        console.log(error)
+    }
+})
+
+app.put('/EditarPuntaje', async function(req,res){
+    const respuesta = await realizarQuery(`
+        UPDATE Usuarios
+        SET puntaje = '${req.body.puntaje}'
+        WHERE id = ${req.body.id}
+    `)
+    res.send({mensaje: "Puntaje editado con exito"})
+})
+
+
+// PREGUNTAS ------------------------------------------------------------------------------------
 
 app.post('/subirPregunta', async function(req,res){
     try {
@@ -455,12 +527,13 @@ app.post('/subirPregunta', async function(req,res){
     }
 })
 
-
-
 app.delete('/EliminarPregunta', async function(req,res){
     try {
+        const result = await realizarQuery(`
+            DELETE FROM Respuestas WHERE id_pregunta = ${req.body.id_pregunta}    
+        `)
         const respuesta = await realizarQuery(`
-            DELETE FROM Preguntas WHERE id_pregunta = ${req.query.id_pregunta}
+            DELETE FROM Preguntas WHERE id_pregunta = ${req.body.id_pregunta}
         `)
         res.send({mensaje: "Se Elimino la pregunta"})
     } catch (error) {
@@ -468,18 +541,13 @@ app.delete('/EliminarPregunta', async function(req,res){
     }
 })
 
-
-app.get('/preguntas', async function(req, res){
-    try {
-        console.log(req.query);
-        const preguntas = await realizarQuery(`
-        SELECT * FROM Preguntas;
-        `)
-        console.log({preguntas})
-        res.send(preguntas)
-    } catch (error) {
-        console.log(error)
-    }
+app.put('/EditarPregunta', async function(req,res){
+    const response = await realizarQuery(`
+        UPDATE Preguntas
+        SET pregunta = '${req.body.pregunta}'
+        WHERE id_pregunta = ${req.body.id_pregunta}
+    `)
+    res.send({mensaje: "Pregunta editada con exito"})
 })
 
 app.post('/conseguirIdPregunta', async function(req,res){
@@ -495,7 +563,7 @@ app.post('/conseguirIdPregunta', async function(req,res){
 })
 
 
-// SUBIR RESPUESTA
+// RESPUESTAS ------------------------------------------------------------------------------------------------------ 
 
 app.post('/subirRespuesta', async function(req,res){
     try {
@@ -507,4 +575,13 @@ app.post('/subirRespuesta', async function(req,res){
     } catch (error) {
         console.log(error)
     }
+})
+
+app.put('/EditarRespuesta', async function(req,res){
+    const response = await realizarQuery(`
+        UPDATE Respuestas
+        SET respuesta = '${req.body.respuesta}'
+        WHERE id_respuesta = ${req.body.id_respuesta}
+    `)
+    res.send({mensaje: "Respuesta editada con exito"})
 })
