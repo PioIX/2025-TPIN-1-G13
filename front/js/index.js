@@ -179,6 +179,23 @@ async function existsUser (nombre,password) {
     }
 }
 
+async function existsUserRegister(nombre) { 
+    try {
+        const respuesta = await fetch(`http://localhost:4006/usuarioExisteRegistro`, {
+            method: "POST", //GET, POST, PUT o DELETE
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({usuario: nombre}),    
+        })
+        let result = await respuesta.json()
+        console.log(result)
+        return result
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 async function conseguirID(nombre) {
     try {
         const respuesta = await fetch(`http://localhost:4006/conseguirId`, {
@@ -232,19 +249,16 @@ async function login() {
             console.log(admin)
             if (admin > 0) {
                 ui.clearLoginInputs()
-                console.log("soy admin")
-                console.log("USTED INGRESO AL JUEGO")
-                // ui.setUser(nombre)
+                ui.clearAgregarPreguntasyRespuestasInputs()
+                ui.clearEditarPreguntaoRespuestasInputs()
+                ui.clearEditarPuntajeInputs()
+                ui.clearSelectsEliminarUsuarioyEliminarPregunta()
                 ui.changeScreenAdmin()
             } else {
                 ui.clearLoginInputs()
-                console.log("no soy admin")
-                console.log("USTED INGRESO AL JUEGO")
                 ui.changeScreen()
-                // ui.setuser()
             }
         } else {
-            console.log("NO PUDO INGRESAR AL JUEGO")
             ui.clearLoginInputs()
             ui.showModal("Usuario o contraseña son incorrectos")
             idLogged = -1;
@@ -274,7 +288,7 @@ async function conseguirDatos(nombre, password) {
 
 async function newuser(nombre, password) {
     try {
-        let resultado = await existsUser(nombre, password)
+        let resultado = await existsUserRegister(nombre)
         console.log(resultado)
         if (resultado.length == 0) {
                 console.log("hola")
@@ -400,7 +414,7 @@ async function postRespuestas() {
             let result = await response.json();
             console.log("Respuesta subida:", result);
         }
-        ui.clearLoginInputs()
+        ui.clearAgregarPreguntasyRespuestasInputs()
         ui.showModal("Respuestas subidas con éxito - Vinculadas a la pregunta");
 } 
 
@@ -416,35 +430,270 @@ async function conseguirPregunta(){
     return result
 }
 
-async function llenarSelectPreguntaEliminar() {
-    let preguntas = await conseguirPregunta()
-    console.log(preguntas)
 
-    let selectPregunta = ``
-    for (let i = 0; i < preguntas.length; i++) {
-        selectPregunta += `<option>${preguntas[i].id_pregunta + " - " + preguntas[i].pregunta}</option>`
-    }
-
-    document.getElementById("SelectPreguntaEliminar").innerHTML += selectPregunta
-}
 
 async function eliminarPregunta() {
-    let id = document.getElementById("SelectPreguntaEliminar").value
+    let result = ui.getIdPreguntaEliminar()
+    console.log(result)
     const response = await fetch(`http://localhost:4006/EliminarPregunta`, {
         method: "DELETE", //GET, POST, PUT o DELETE
         headers: {
             "Content-Type": "application/json",
         },
-        body: ({id_pregunta: id})
-    },
-    ui.showModal("Pregunta Eliminada")
-)}
+        body: JSON.stringify({id_pregunta: result})
+    })
+    let resultado = await response.json()
+    console.log(resultado)
+    ui.showModal("Pregunta eliminada")
+} 
 
+
+async function conseguirUsuarios(){
+    const response = await fetch(`http://localhost:4006/usuarios`, {
+        method: "GET", //GET, POST, PUT o DELETE
+        headers: {
+            "Content-Type": "application/json",
+        },
+    })
+    let result = await response.json()
+    return result
+}
+
+async function conseguirRespuestas(){
+    const response = await fetch(`http://localhost:4006/respuestas`, {
+        method: "GET", //GET, POST, PUT o DELETE
+        headers: {
+            "Content-Type": "application/json",
+        },
+    })
+    let result = await response.json()
+    return result
+}
+
+async function conseguirRespuestasEspecificas(idPregunta){
+    const response = await fetch(`http://localhost:4006/respuestasEsp`, {
+        method: "POST", //GET, POST, PUT o DELETE
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({id_pregunta: idPregunta})
+    })
+    let result = await response.json()
+    return result
+}
 
 /*-------------------------------------------------------------------------------------------------------------------------------------*/
+// EDITAR PREGUNTAAAAAAAAAAA ------------------------------------------------------------------------------------------
 
 async function editarPregunta() {
- 
+    try {
+        console.log("hola")
+        let id = ui.getIdPreguntaEditar();
+        console.log(id)
+        let nuevaPregunta = ui.getNuevaPregunta();
+        console.log(nuevaPregunta)
+    
+        if ((!nuevaPregunta || nuevaPregunta === "")) {
+            ui.showModal("No hay nada para editar");
+            return;
+        }
+    
+        let datos = {
+            id_pregunta: id,
+            pregunta: nuevaPregunta
+        }
+
+        console.log(datos)
+    
+        try {
+            const response = await fetch(`http://localhost:4006/EditarPregunta`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(datos)
+            });
+    
+            let resultado = await response.json();
+            console.log(resultado);
+            ui.showModal("Pregunta editada correctamente");
+        } catch (error) {
+            console.log("Error al editar");
+            ui.showModal("Hubo un error al editar la pregunta");
+        }
+    } catch (error) {
+        console.log("Error llamada a la funcion")
+    }
+}
+
+// --------------------------------- EDITAR PUNTAJE --------------------
+
+
+async function EditarPuntajeUsuario(){
+    try {
+        let id = ui.getPuntajeEditar()
+        let puntajeNuevo = ui.getPuntajeNuevo()
+        if ((!puntajeNuevo || puntajeNuevo === "")) {
+                ui.showModal("No puede no tener puntaje");
+                return;
+            }
+    
+    
+        let datos = {
+            id: id,
+            puntaje: puntajeNuevo
+        }
+    
+        try {
+            const response = await fetch(`http://localhost:4006/EditarPuntaje`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(datos)
+            });
+        
+            let resultado = await response.json();
+            console.log(resultado);
+            ui.clearEditarPuntajeInputs()
+            ui.showModal("Puntaje editado correctamente");
+        } catch (error) {
+            console.log("Error al editar");
+            ui.showModal("Hubo un error al editar el puntaje");
+        }
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+// ---------------------- EDITAR RESPUESTAS -------------------------------
+
+async function editarRespuesta() {
+    try {
+        let id = ui.getIdRespuestaEditar()
+        let nuevaRespuesta = ui.getNuevaRespuesta()
+    
+        if ((!nuevaRespuesta || nuevaRespuesta === "")) {
+                ui.showModal("No hay nada para editar");
+                return;
+        }
+    
+        let datos = {
+            id_respuesta: id,
+            respuesta: nuevaRespuesta
+        }
+    
+        try {
+            const response = await fetch(`http://localhost:4006/EditarRespuesta`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(datos)
+            });
+                
+            let resultado = await response.json();
+            console.log(resultado);
+            ui.clearEditarPreguntaoRespuestasInputs()
+            ui.showModal("Respuesta editada correctamente");
+        } catch (error) {
+            console.log("Error al editar");
+            ui.showModal("Hubo un error al editar el puntaje");
+        }
+    } catch (error) {
+        console.log(error)
+    }
+
+}
+
+
+// --------------------------------- ELMIINAR USUARIO -------------------------------
+
+async function eliminarUsuarios() {
+    let result = ui.getIdUsuarioEliminar()
+    console.log(result)
+    const response = await fetch(`http://localhost:4006/EliminarUsuario`, {
+        method: "DELETE", //GET, POST, PUT o DELETE
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({id: result})
+    })
+    let resultado = await response.json()
+    console.log(resultado)
+    ui.showModal("Usuario eliminado")
+}
+
+
+
+
+// -------------------------------------- SELECTS ---------------------------------------------------------------------//
+
+async function llenarSelectPreguntaEliminar() {
+    let preguntas = await conseguirPregunta()
+    console.log(preguntas)
+    let selectPregunta = ``
+    for (let i = 0; i < preguntas.length; i++) {
+    selectPregunta += `<option value="${preguntas[i].id_pregunta}">
+        ${preguntas[i].id_pregunta} - ${preguntas[i].pregunta}
+    </option>`;
+    }
+
+    document.getElementById("SelectPreguntaEliminar").innerHTML += selectPregunta
+}
+
+async function llenarSelectPreguntaEditar() {
+    let preguntas = await conseguirPregunta()
+    console.log(preguntas)
+    let selectPregunta = ``
+    for (let i = 0; i < preguntas.length; i++) {
+    selectPregunta += `<option value="${preguntas[i].id_pregunta}">
+        ${preguntas[i].id_pregunta} - ${preguntas[i].pregunta}
+    </option>`;
+    }
+
+    document.getElementById("SelectPreguntaEditar").innerHTML += selectPregunta
+}
+
+async function llenarSelectUsuarios() {
+    let usuarios = await conseguirUsuarios()
+    console.log(usuarios)
+    let selectUsuario = ``
+    for (let i = 0; i < usuarios.length; i++) {
+    selectUsuario += `<option value="${usuarios[i].id}">
+        ${usuarios[i].id} - ${usuarios[i].usuario}
+    </option>`;
+    }
+
+    document.getElementById("SelectUsuario").innerHTML += selectUsuario
+}
+
+async function llenarSelectUsuariosPuntaje() {
+    let usuarios = await conseguirUsuarios()
+    console.log(usuarios)
+    let selectUsuario = ``
+    for (let i = 0; i < usuarios.length; i++) {
+    selectUsuario += `<option value="${usuarios[i].id}">
+        ${usuarios[i].id} - ${usuarios[i].usuario}  - Puntaje: ${usuarios[i].puntaje}
+    </option>`;
+    }
+
+    document.getElementById("SelectPuntaje").innerHTML += selectUsuario
+}
+
+async function buscarRespuestasDePregunta(){
+    let idPregunta = ui.getIdPreguntaEditar()
+    const respuestas = await conseguirRespuestasEspecificas(idPregunta)
+    console.log(respuestas)
+    document.getElementById("SelectRespuesta").innerHTML = "";
+    let selectRespuesta = ``
+    for (let i = 0; i < respuestas.length; i++) {
+        selectRespuesta += `<option value="${respuestas[i].id_respuesta}">
+            ${respuestas[i].id_respuesta} - '${respuestas[i].respuesta}' 
+        </option>`;
+    }
+        document.getElementById("SelectRespuesta").innerHTML += selectRespuesta
+    
 }
 
 /*-------------------------------------------------------------------------------------------------------------------------------*/
@@ -461,6 +710,3 @@ function cerrarsesion(){
         ui.showModal("Seguis en sesion")
     }
 }
-
-
-

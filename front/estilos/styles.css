@@ -194,42 +194,131 @@ footer {
 
 /* SECCION ADMIN */
 
-.ParteAdmin{
+.ParteAdmin {
     display: none;
     text-align: center;
+    padding: 30px;
+    background: linear-gradient(120deg, #fff1eb, #ace0f9);
+    min-height: 100vh;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.ParteAdmin h2{
+    margin-bottom: 20px;
+    font-size: 35px;
+    font-style: italic;
 }
 
 .admin-buttons {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
-    margin-bottom: 20px;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 30px;
+    
 }
 
 .admin-buttons button {
-    padding: 10px 15px;
+    padding: 12px 20px;
     border: none;
     background-color: #007bff;
     color: white;
-    border-radius: 6px;
+    border-radius: 10px;
+    font-size: 1rem;
     cursor: pointer;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.2s ease;
+    font-style: italic;
 }
 
 .admin-buttons button:hover {
     background-color: #0056b3;
+    transform: scale(1.05);
 }
 
 .admin-seccion {
-    border: 1px solid #ccc;
-    padding: 15px;
-    border-radius: 6px;
-    background-color: #f9f9f9;
+    border: 2px solid #eee;
+    padding: 30px;
+    border-radius: 15px;
+    background-color: #ffffff;
+    max-width: 800px;
+    margin: 0 auto;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
 }
 
-.admin-seccion button{
+.admin-seccion h3 {
+    font-size: 1.6rem;
+    margin-bottom: 25px;
+    color: #333;
+}
+
+.admin-seccion input,
+.admin-seccion select {
+    width: 100%;
+    padding: 10px 12px;
+    margin: 10px 0 20px 0;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1rem;
+}
+
+.admin-seccion label {
+    display: block;
+    margin-top: -10px;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #444;
+    text-align: left;
+}
+
+.admin-seccion button {
     background-color: palevioletred;
     font-size: 1rem;
     color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 10px;
+    margin-top: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.admin-seccion button:hover {
+    background-color: #d45987;
+}
+
+.opciones {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.opciones div {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+#categoria {
+    max-width: 300px;
+    margin: 0 auto;
+    display: block;
+}
+
+select#SelectPreguntaEditar,
+select#SelectRespuesta,
+select#SelectPreguntaEliminar,
+select#SelectUsuario,
+select#SelectPuntaje {
+    max-width: 400px;
+    margin: 0 auto 20px auto;
+    display: block;
+}
+
+select#SelectRespuesta {
+    margin-top: 20px;
 }
 
 /*parte juego*/
