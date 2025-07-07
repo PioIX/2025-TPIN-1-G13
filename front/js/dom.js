@@ -86,6 +86,14 @@ class UserInterface {
         
     }
 
+    mostrarSeccionJUGAR(id) {
+        const secciones = document.querySelectorAll('ContenedorJuego');
+        secciones.forEach(sec => {
+            sec.style.display = (sec.id === id) ? 'block' : 'none';
+        }); 
+        
+    }
+
     // PREGUNTAS GET ---------------------------------------------------------------------------------
     getPregunta() {
         return document.getElementById("pregunta").value
