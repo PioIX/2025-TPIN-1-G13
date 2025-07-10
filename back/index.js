@@ -585,3 +585,19 @@ app.put('/EditarRespuesta', async function(req,res){
     `)
     res.send({mensaje: "Respuesta editada con exito"})
 })
+
+
+// --------------------------------- PARTE DEL JUEGO ----------------------------------------------------------------------------------
+
+app.get('/categorias', async function(req, res){
+    try {
+        console.log(req.query);
+        const categorias = await realizarQuery(`
+        SELECT categoria FROM Preguntas;
+        `)
+        console.log({categorias})
+        res.send(categorias)
+    } catch (error) {
+        console.log(error)
+    }
+})

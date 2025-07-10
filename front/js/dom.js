@@ -60,13 +60,10 @@ class UserInterface {
     changeScreen() {
         const notepad = document.getElementById("notepad");
         const loginForm = document.getElementById("loginForm");
-        if (notepad.style.display == "none") {
-            notepad.style.display = "block";
-            loginForm.style.display = "none";
-        } else {
-            notepad.style.display = "none";
-            loginForm.style.display = "flex";
-        }
+        const header = document.getElementById("barra");
+        loginForm.style.display = 'none';
+        header.style.display = 'none';
+        notepad.style.display = 'block';
     }
 
     changeScreenAdmin() {
@@ -87,7 +84,7 @@ class UserInterface {
     }
 
     mostrarSeccionJUGAR(id) {
-        const secciones = document.querySelectorAll('ContenedorJuego');
+        const secciones = document.querySelectorAll('.juego-seccion');
         secciones.forEach(sec => {
             sec.style.display = (sec.id === id) ? 'block' : 'none';
         }); 
