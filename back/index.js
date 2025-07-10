@@ -601,3 +601,15 @@ app.get('/categorias', async function(req, res){
         console.log(error)
     }
 })
+
+app.post('/preguntaResponder', async function(req,res){
+    try {
+        const respuesta = await realizarQuery(`
+            SELECT pregunta FROM Preguntas WHERE categoria = '${req.body.categoria}'
+        `)
+        console.log(respuesta)
+        res.send(respuesta)
+    } catch (error) {
+        console.log(error)
+    }
+})
