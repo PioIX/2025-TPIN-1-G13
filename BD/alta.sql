@@ -33,11 +33,14 @@ VALUES
     (5, "mati", "b", 0, 0, FALSE);
 
 
-INSERT INTO Preguntas (id_pregunta, pregunta, categoria) 
+INSERT INTO Preguntas (pregunta, categoria, imagen) 
 VALUES
-    (1, "¿Como se llama el profesor de Quimica?", "Ciencia"),
-    (2, "¿Como se llama el profesor de Lengua?", "Entretenimiento"),
-    (3, "¿En que pais vivimos?", "Geografia");
+    ("¿Como se llama el profesor de Quimica?", "Ciencia", "../IMAGES/reglas.png"),
+    ("¿Como se llama el profesor de Lengua?", "Entretenimiento", null),
+    ("¿En que pais vivimos?", "Geografia", "../IMAGES/reglas.png");
+    ("¿En que año Cristobal Colon llegó a América?", "Historia", "../IMAGES/reglas.png");
+    ("¿Quién pintó la 'Última Cena'?", "Arte", null);
+    ("¿Qué país ganó el mundial de fútbol masculino en 2010?", "Deporte", null);
 
 
 INSERT INTO Respuestas (id_respuesta, id_pregunta, correcta, respuesta)

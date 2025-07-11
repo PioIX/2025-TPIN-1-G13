@@ -335,6 +335,7 @@ async function datosPregunta() {
     let datos = {
         pregunta: ui.getPregunta(),
         categoria: ui.getCategoria(),
+        imagen: ui.getImagen()
     }
     return datos
 }
