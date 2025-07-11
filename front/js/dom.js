@@ -96,6 +96,10 @@ class UserInterface {
         return document.getElementById("pregunta").value
     }
 
+    getImagen() {
+        return document.getElementById("imagen").value
+    }
+
     getCategoria() {
         return document.getElementById("categoria").value
     }

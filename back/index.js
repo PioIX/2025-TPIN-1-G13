@@ -518,8 +518,8 @@ app.put('/EditarPuntaje', async function(req,res){
 app.post('/subirPregunta', async function(req,res){
     try {
         const respuesta = await realizarQuery(`
-            INSERT INTO Preguntas (pregunta, categoria)
-            VALUES ('${req.body.pregunta}','${req.body.categoria}')
+            INSERT INTO Preguntas (pregunta, categoria, imagen)
+            VALUES ('${req.body.pregunta}','${req.body.categoria}', '${req.body.imagen}')
         `)
         res.send({mensaje: "Se insertó la pregunta"})
     } catch (error) {
