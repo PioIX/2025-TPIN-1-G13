@@ -595,7 +595,6 @@ app.get('/categorias', async function(req, res){
         const categorias = await realizarQuery(`
         SELECT categoria FROM Preguntas;
         `)
-        console.log({categorias})
         res.send(categorias)
     } catch (error) {
         console.log(error)
@@ -607,7 +606,6 @@ app.post('/preguntaResponder', async function(req,res){
         const respuesta = await realizarQuery(`
             SELECT pregunta FROM Preguntas WHERE categoria = '${req.body.categoria}'
         `)
-        console.log(respuesta)
         res.send(respuesta)
     } catch (error) {
         console.log(error)

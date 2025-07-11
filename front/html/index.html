@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link href="../estilos/styles.css" type="text/css" rel="stylesheet">
+    <link href="../estilos/juego.css" type="text/css" rel="stylesheet">
     <title>PREGUNTADOS</title>
     <link rel="icon" href="../IMAGES/PreguntadosLogo2024.webp" type="image/x-icon">
 </head>
@@ -149,8 +150,15 @@
                 <div class="contenedor" id="seleccion">
                     <div class="aleatorio" id="aleatorio">
                         <label>Presione el botón para comenzar a jugar</label>
-                        <button onclick="juego()">Comenzar</button>
+                        <button onclick="juegoCarga()">¡Comenzar!</button>
                         <img src="../IMAGES/preguntados.png" alt="icono preguntados" width="90px" height="90px">
+                    </div>
+                    <div id="pantalla-carga" style="display: none; justify-content: center; align-items: center; height: 200px;">
+                        <div id="pelota-carga"></div>
+                    </div>
+                    <div id="prePregunta"></div>
+                    <div id="preguntaResponder">
+                        
                     </div>
             </section>
             <section id="reglas" class="juego-seccion" style="display: none;">
@@ -214,5 +222,6 @@
 </body>
 <script src="../js/dom.js"></script>
 <script src="../js/index.js"></script>
+<script src="../js/objetos.js"></script>
 <script src="../js/codigoJuego.js"></script>
 </html>

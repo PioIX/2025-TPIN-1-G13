@@ -152,6 +152,62 @@ class UserInterface {
 
         modal.show();
     } 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // JUEGO -------------------------------------------------------------------------------------
+
+    async PantallaCarga(){
+        document.getElementById("EncabezadoJuego").style.display = 'none';
+        document.getElementById("mensajeInicio").style.display = 'none';
+        document.getElementById("pantalla-carga").style.display = "flex";
+        document.getElementById("aleatorio").style.display = "none";
+        await new Promise(resolve => setTimeout(resolve, 2000))
+        document.getElementById("pantalla-carga").style.display = "none";
+    }
+
+    rellenarPrePregunta(categoria){
+        let div = document.getElementById("prePregunta")
+        let x = 0
+        for (let i = 0; i < tematica.length; i++) {
+            if (tematica[i].nombre == categoria) {
+                x = i 
+            }
+        }
+        let info =
+            `
+            <label class="categoria">- ` + tematica[x].nombre + ` -</label>
+            <img src="` + tematica[x].icono + `" alt="Categoría" width="200px" height="200px">
+            <button class="comenzar" onclick="PreguntasJuego()">Comenzar con la pregunta</button>
+        `;
+        div.innerHTML = info
+        div.style.display = 'block';
+    }
+
+    rellenarPregunta(pregunta, imagen, opciones) {
+        // hacer timer
+        let div = document.getElementById("preguntaResponder")
+        div.style.display = 'block'
+        if (imagen.length > 0) {
+            let info = 
+                `
+                en este info se agrega un <img src 'url de la variable imagen' y despues la pregunta y sus opciones
+            `;
+        }
+        
+        
+    }
 }
 
 const ui = new UserInterface();

@@ -1,19 +1,19 @@
-var tematica = [{
-    nombre: "CIENCIA",
+const tematica = [{
+    nombre: "Ciencia",
     icono: "../IMAGES/ciencia.png"
 }, {
-    nombre: "ENTRETENIMIENTO",
+    nombre: "Entretenimiento",
     icono: "../IMAGES/entretenimiento.png"
 }, {
-    nombre: "DEPORTE",
+    nombre: "Deporte",
     icono: "../IMAGES/deportes.png"
 }, {
-    nombre: "ARTE",
+    nombre: "Arte",
     icono: "../IMAGES/arte.png"
 }, {
-    nombre: "GEOGRAFÍA",
+    nombre: "Geografia",
     icono: "../IMAGES/geografia.png"
 }, {
-    nombre: "HISTORIA",
+    nombre: "Historia",
     icono: "../IMAGES/historia.png"
 }]

@@ -365,7 +365,6 @@ async function conseguirIdPregunta(pregunta) {
     let result = await response.json()
     console.log(result)
     if (result.length > 0) {
-        console.log(result[0].id_pregunta)
         return result[0].id_pregunta; // ✅ devolvemos solo el número
     } else {
         return -1; // o null, según cómo quieras manejar errores
