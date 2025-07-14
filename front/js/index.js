@@ -583,7 +583,7 @@ async function EditarPuntajeUsuario() {
     }
 }
 
-// ---------------------- EDITAR RESPUESTAS -------------------------------
+// ----------------------------------------------------------- EDITAR RESPUESTAS ------------------------------------------------------------
 
 async function editarRespuesta() {
     try {

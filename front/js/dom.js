@@ -241,7 +241,10 @@ class UserInterface {
 
 
     // VERIFICACIONES
-
+    funciondePuntajeyCambiodeColores(){
+        div = document.getElementById("")
+        
+    }
 
 }
 

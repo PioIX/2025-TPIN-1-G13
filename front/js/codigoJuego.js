@@ -42,6 +42,7 @@ async function conseguirVector() {
     let preguntaSeleccionada = preguntasCategoria[Math.floor(Math.random() * preguntasCategoria.length)].pregunta; // se consigue el valor de la pregunta
     result.push(preguntaSeleccionada, categoriaSeleccionada)
     contadorPreguntas += 1
+    sumapuntos = 100
     return result
 }
 
@@ -111,11 +112,14 @@ async function VerificarRespuesta(boton) {
     let respuestaSeleccionada = boton.innerText;
     console.log("Se apretó:", respuestaSeleccionada);
     let result = await verificacion(respuestaSeleccionada)
-    if (result[0].correcta === 1) {
-        console.log("La respuesta es correcta")
+    if (result[0].correcta === 0) {
+        console.log("La respuesta es incorrecta")
+        sumapuntos -= resta
         //ui.funciondePuntajeyCambiodeColores
     } else {
-        console.log("La respuesta es incorrecta")
+        console.log("La respuesta es correcta")
+        contadorPuntos += sumapuntos
+
         //ui.funciondePuntajeyCambiodeColores
     }
 }
