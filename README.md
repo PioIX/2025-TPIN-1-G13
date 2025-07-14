@@ -70,3 +70,8 @@ Base de datos de ranking (“puesto”, “nombre”, “puntaje”, “tiempo�
 se actualizará cada que un jugador sea agregado a la otra base de datos y mediante una
 función calculará cuál es el puntaje más alto y con menor tiempo. Cuando de con la mejor
 calificación disponible lo colocará en el ranking.
+
+Bocetos:
+![img1](front/IMAGES/readme1.png)
+![img2](front/IMAGES/readme2.png)
+![img3](front/IMAGES/readme3.png)
