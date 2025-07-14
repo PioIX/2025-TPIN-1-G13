@@ -1,3 +1,12 @@
+let preguntaActual = null
+let contadorPuntos = 0
+let sumapuntos = 100
+let resta = 25
+let tiempo = 0
+let contadorPreguntas = 0
+
+
+
 async function conseguirCategorias() {
     const response = await fetch(`http://localhost:4006/categorias`, {
         method: "GET", //GET, POST, PUT o DELETE
@@ -32,23 +41,28 @@ async function conseguirVector() {
     let preguntasCategoria = await conseguirPreguntasDeCategoria(categoriaSeleccionada)
     let preguntaSeleccionada = preguntasCategoria[Math.floor(Math.random() * preguntasCategoria.length)].pregunta; // se consigue el valor de la pregunta
     result.push(preguntaSeleccionada, categoriaSeleccionada)
+    contadorPreguntas += 1
     return result
 }
 
-let preguntaActual = null
+
 
 async function juegoCarga() {
-    ui.PantallaCarga()
-    let vector = await conseguirVector()
-    preguntaActual = vector[0]
-    console.log(preguntaActual)
-    let categoria = vector[1]
-    console.log("Pregunta: ", preguntaActual, "- Categoria: ", categoria)
-    await new Promise(resolve => setTimeout(resolve, 1650))
-    ui.rellenarPrePregunta(categoria)
+    if (contadorPreguntas <= 20) {
+        ui.PantallaCarga()
+        let vector = await conseguirVector()
+        preguntaActual = vector[0]
+        console.log(preguntaActual)
+        let categoria = vector[1]
+        console.log("Pregunta: ", preguntaActual, "- Categoria: ", categoria)
+        await new Promise(resolve => setTimeout(resolve, 4750))
+        ui.rellenarPrePregunta(categoria)
+    } else {
+        console.log("finaliza el juego")
+        // ui.final()
+    }
 }
 
-// Esta funcion aun no funciona pq las preguntas no tienen imagen. Hacer mañana
 async function corroborarImagenEnPregunta(preguntaActual) {
     try {
         const response = await fetch(`http://localhost:4006/preguntaImagen`, {
@@ -59,18 +73,49 @@ async function corroborarImagenEnPregunta(preguntaActual) {
             body: JSON.stringify({pregunta: preguntaActual})
         })
         let result = await response.json()
-        // A partir de aca seguir la comprobacion
-        return result
+        if (result != null) {
+            return result[0].imagen
+        } else {
+            return undefined
+        }
     } catch (error) {
         console.log(error)
     }
 }
 
 async function PreguntasJuego() {
-    console.log(preguntaActual)
     let id = await conseguirIdPregunta(preguntaActual)
     let respuestas = await conseguirRespuestasEspecificas(id)
-    console.log("id: ", id, "  respuestas: ", respuestas)
-    // let imagen = await corroborarImagenEnPregunta(preguntaActual)
-    // ui.rellenarPregunta(preguntaActual, imagen)
+    let imagen = await corroborarImagenEnPregunta(preguntaActual)
+    console.log("id: ", id, "  respuestas: ", respuestas, "  Ruta Imagen: ", imagen)
+    ui.rellenarPregunta(preguntaActual, respuestas, imagen)
+}
+
+
+async function verificacion(respuestaSeleccionada) {
+    let id = await conseguirIdPregunta(preguntaActual)
+
+    const response = await fetch(`http://localhost:4006/verificacionRespuesta`, {
+        method: "POST", //GET, POST, PUT o DELETE
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({respuesta: respuestaSeleccionada, id_pregunta: id})
+    })
+    let result = await response.json()
+    console.log("¿Es correcto?: ", result)
+    return result
+}
+
+async function VerificarRespuesta(boton) {
+    let respuestaSeleccionada = boton.innerText;
+    console.log("Se apretó:", respuestaSeleccionada);
+    let result = await verificacion(respuestaSeleccionada)
+    if (result[0].correcta === 1) {
+        console.log("La respuesta es correcta")
+        //ui.funciondePuntajeyCambiodeColores
+    } else {
+        console.log("La respuesta es incorrecta")
+        //ui.funciondePuntajeyCambiodeColores
+    }
 }

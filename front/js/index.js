@@ -27,12 +27,12 @@ async function traerClubes() {
     if (document.getElementById("Tabla") != undefined) {
         document.getElementById("Tabla").innerHTML += tabla;
     }
-    else{
+    else {
         return clubes
     }
 
 
-}    
+}
 
 // Punto 2
 
@@ -72,7 +72,7 @@ async function EliminarClub(id) {
         headers: {
             "Content-Type": "application/json",
         },
-        body: JSON.stringify({id_club: id})
+        body: JSON.stringify({ id_club: id })
     })
     console.log(response)
     let result = await response.json()
@@ -99,12 +99,12 @@ function ObtenerId() {
 
 // Punto 4
 
-async function fetchModificarClub(id_club,cant_nueva) {
+async function fetchModificarClub(id_club, cant_nueva) {
     let response = await fetch("http://localhost:4000/clubesput",
         {
             method: "PUT",
             headers: { "Content-type": "application/json" },
-            body: JSON.stringify({ cant_jugadores: cant_nueva,id_club: id_club }) //El paremetro se tiene que llamar como lo espera el back en el body
+            body: JSON.stringify({ cant_jugadores: cant_nueva, id_club: id_club }) //El paremetro se tiene que llamar como lo espera el back en el body
         })
     let result = response.json()
     return result
@@ -129,7 +129,7 @@ async function llenarSelectclub() {
 async function modificar() {
     let id_club = getId()
     let cant_nueva = getCantNueva()
-    let respuesta = await fetchModificarClub(id_club,cant_nueva)
+    let respuesta = await fetchModificarClub(id_club, cant_nueva)
     return
 }
 
@@ -142,7 +142,7 @@ async function fetchNombre(nombre) {
         headers: {
             "Content-Type": "application/json",
         },
-        body: JSON.stringify({name: nombre})
+        body: JSON.stringify({ name: nombre })
     })
     console.log(response)
     let result = await response.json()
@@ -159,17 +159,17 @@ function envioUsuario() {
 // -------------------------------------------------------------------------------TP MITAD DE AÑO-------------------------------------------
 
 
-let idLogged = -1  
+let idLogged = -1
 
 // LOGIN  !!!!!!!!!!!
-async function existsUser (nombre,password) { 
+async function existsUser(nombre, password) {
     try {
         const respuesta = await fetch(`http://localhost:4006/usuarioExiste`, {
             method: "POST", //GET, POST, PUT o DELETE
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({usuario: nombre, contraseña: password}),    
+            body: JSON.stringify({ usuario: nombre, contraseña: password }),
         })
         let result = await respuesta.json()
         console.log(result)
@@ -179,14 +179,14 @@ async function existsUser (nombre,password) {
     }
 }
 
-async function existsUserRegister(nombre) { 
+async function existsUserRegister(nombre) {
     try {
         const respuesta = await fetch(`http://localhost:4006/usuarioExisteRegistro`, {
             method: "POST", //GET, POST, PUT o DELETE
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({usuario: nombre}),    
+            body: JSON.stringify({ usuario: nombre }),
         })
         let result = await respuesta.json()
         console.log(result)
@@ -203,8 +203,8 @@ async function conseguirID(nombre) {
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({usuario: nombre})
-    
+            body: JSON.stringify({ usuario: nombre })
+
         })
         let result = await respuesta.json()
         console.log(result)
@@ -221,8 +221,8 @@ async function esAdmin(nombre) {
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({usuario: nombre})
-    
+            body: JSON.stringify({ usuario: nombre })
+
         })
         let result = await respuesta.json()
         console.log(result)
@@ -238,9 +238,9 @@ async function esAdmin(nombre) {
 
 async function login() {
     try {
-        let nombre = ui.getUser(); 
+        let nombre = ui.getUser();
         let password = ui.getPassword();
-        let resultado = await existsUser(nombre, password) 
+        let resultado = await existsUser(nombre, password)
         console.log(resultado)
         if (resultado.length > 0) {  // SEGUIR SISTEMA DE LENGHT PARA USUARIOS
             idLogged = await conseguirID(nombre);
@@ -291,26 +291,26 @@ async function newuser(nombre, password) {
         let resultado = await existsUserRegister(nombre)
         console.log(resultado)
         if (resultado.length == 0) {
-                console.log("hola")
-                let datos = await conseguirDatos(nombre, password)
-                const response = await fetch(`http://localhost:4006/insertarUsuario`, {
-                    method: "POST", //GET, POST, PUT o DELETE
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify(datos)
+            console.log("hola")
+            let datos = await conseguirDatos(nombre, password)
+            const response = await fetch(`http://localhost:4006/insertarUsuario`, {
+                method: "POST", //GET, POST, PUT o DELETE
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(datos)
             })
             let result = await response.json()
             console.log(result)
             return 1
         } else {
-                return -1;
-            }
+            return -1;
+        }
     } catch (error) {
         console.log(error)
     }
 }
-            
+
 async function registrar() {
     try {
         let nombre = ui.getUser();
@@ -361,7 +361,7 @@ async function conseguirIdPregunta(pregunta) {
         headers: {
             "Content-Type": "application/json",
         },
-        body: JSON.stringify({pregunta: pregunta})
+        body: JSON.stringify({pregunta: pregunta })
     })
     let result = await response.json()
     console.log(result)
@@ -400,26 +400,26 @@ async function datosRespuesta() {
 
 
 async function postRespuestas() {
-        let respuestas = await datosRespuesta();
-    
-        for (let respuesta of respuestas) {
-            const response = await fetch("http://localhost:4006/subirRespuesta", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(respuesta)
-            });
-    
-            let result = await response.json();
-            console.log("Respuesta subida:", result);
-        }
-        ui.clearAgregarPreguntasyRespuestasInputs()
-        ui.showModal("Respuestas subidas con éxito - Vinculadas a la pregunta");
-} 
+    let respuestas = await datosRespuesta();
+
+    for (let respuesta of respuestas) {
+        const response = await fetch("http://localhost:4006/subirRespuesta", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(respuesta)
+        });
+
+        let result = await response.json();
+        console.log("Respuesta subida:", result);
+    }
+    ui.clearAgregarPreguntasyRespuestasInputs()
+    ui.showModal("Respuestas subidas con éxito - Vinculadas a la pregunta");
+}
 
 
-async function conseguirPregunta(){
+async function conseguirPregunta() {
     const response = await fetch(`http://localhost:4006/preguntas`, {
         method: "GET", //GET, POST, PUT o DELETE
         headers: {
@@ -440,15 +440,15 @@ async function eliminarPregunta() {
         headers: {
             "Content-Type": "application/json",
         },
-        body: JSON.stringify({id_pregunta: result})
+        body: JSON.stringify({ id_pregunta: result })
     })
     let resultado = await response.json()
     console.log(resultado)
     ui.showModal("Pregunta eliminada")
-} 
+}
 
 
-async function conseguirUsuarios(){
+async function conseguirUsuarios() {
     const response = await fetch(`http://localhost:4006/usuarios`, {
         method: "GET", //GET, POST, PUT o DELETE
         headers: {
@@ -459,7 +459,7 @@ async function conseguirUsuarios(){
     return result
 }
 
-async function conseguirRespuestas(){
+async function conseguirRespuestas() {
     const response = await fetch(`http://localhost:4006/respuestas`, {
         method: "GET", //GET, POST, PUT o DELETE
         headers: {
@@ -470,13 +470,13 @@ async function conseguirRespuestas(){
     return result
 }
 
-async function conseguirRespuestasEspecificas(idPregunta){
+async function conseguirRespuestasEspecificas(idPregunta) {
     const response = await fetch(`http://localhost:4006/respuestasEsp`, {
         method: "POST", //GET, POST, PUT o DELETE
         headers: {
             "Content-Type": "application/json",
         },
-        body: JSON.stringify({id_pregunta: idPregunta})
+        body: JSON.stringify({ id_pregunta: idPregunta })
     })
     let result = await response.json()
     return result
@@ -485,42 +485,59 @@ async function conseguirRespuestasEspecificas(idPregunta){
 /*-------------------------------------------------------------------------------------------------------------------------------------*/
 // EDITAR PREGUNTAAAAAAAAAAA ------------------------------------------------------------------------------------------
 
+async function editarRutaImagen(id, nuevaRutaImagen) {
+    const response = await fetch(`http://localhost:4006/EditarRutaImagen`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ id_pregunta: id, imagen: nuevaRutaImagen })
+    });
+    let resultado = await response.json();
+    console.log(resultado)
+    ui.showModal("Se editó la iamgen")
+    
+}
+
+async function editarContenidoPregunta(id, nuevaPregunta) {
+    let datos = {
+        id_pregunta: id,
+        pregunta: nuevaPregunta
+    }
+
+    try {
+        const response = await fetch(`http://localhost:4006/EditarPregunta`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(datos)
+        });
+
+        let resultado = await response.json();
+        console.log(resultado)
+        ui.showModal("Se editó la iamgen")
+    } catch (error) {
+        console.log("Error al editar");
+    }
+}
+
 async function editarPregunta() {
     try {
-        console.log("hola")
         let id = ui.getIdPreguntaEditar();
-        console.log(id)
         let nuevaPregunta = ui.getNuevaPregunta();
-        console.log(nuevaPregunta)
-    
-        if ((!nuevaPregunta || nuevaPregunta === "")) {
-            ui.showModal("No hay nada para editar");
-            return;
+        let nuevaRutaImagen = ui.getImagenEditar();
+
+        if (nuevaRutaImagen.length > 0) {
+            await editarRutaImagen(id, nuevaRutaImagen)
         }
-    
-        let datos = {
-            id_pregunta: id,
-            pregunta: nuevaPregunta
+        if (nuevaPregunta.length > 0) {
+            await editarContenidoPregunta(id, nuevaPregunta)
+        }
+        if ((!nuevaPregunta || nuevaPregunta == "") && (!nuevaRutaImagen || nuevaRutaImagen == "")) {
+            ui.showModal("No hay nada que editar")
         }
 
-        console.log(datos)
-    
-        try {
-            const response = await fetch(`http://localhost:4006/EditarPregunta`, {
-                method: "PUT",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(datos)
-            });
-    
-            let resultado = await response.json();
-            console.log(resultado);
-            ui.showModal("Pregunta editada correctamente");
-        } catch (error) {
-            console.log("Error al editar");
-            ui.showModal("Hubo un error al editar la pregunta");
-        }
     } catch (error) {
         console.log("Error llamada a la funcion")
     }
@@ -529,21 +546,21 @@ async function editarPregunta() {
 // --------------------------------- EDITAR PUNTAJE --------------------
 
 
-async function EditarPuntajeUsuario(){
+async function EditarPuntajeUsuario() {
     try {
         let id = ui.getPuntajeEditar()
         let puntajeNuevo = ui.getPuntajeNuevo()
         if ((!puntajeNuevo || puntajeNuevo === "")) {
-                ui.showModal("No puede no tener puntaje");
-                return;
-            }
-    
-    
+            ui.showModal("No puede no tener puntaje");
+            return;
+        }
+
+
         let datos = {
             id: id,
             puntaje: puntajeNuevo
         }
-    
+
         try {
             const response = await fetch(`http://localhost:4006/EditarPuntaje`, {
                 method: "PUT",
@@ -552,7 +569,7 @@ async function EditarPuntajeUsuario(){
                 },
                 body: JSON.stringify(datos)
             });
-        
+
             let resultado = await response.json();
             console.log(resultado);
             ui.clearEditarPuntajeInputs()
@@ -572,17 +589,17 @@ async function editarRespuesta() {
     try {
         let id = ui.getIdRespuestaEditar()
         let nuevaRespuesta = ui.getNuevaRespuesta()
-    
+
         if ((!nuevaRespuesta || nuevaRespuesta === "")) {
-                ui.showModal("No hay nada para editar");
-                return;
+            ui.showModal("No hay nada para editar");
+            return;
         }
-    
+
         let datos = {
             id_respuesta: id,
             respuesta: nuevaRespuesta
         }
-    
+
         try {
             const response = await fetch(`http://localhost:4006/EditarRespuesta`, {
                 method: "PUT",
@@ -591,7 +608,7 @@ async function editarRespuesta() {
                 },
                 body: JSON.stringify(datos)
             });
-                
+
             let resultado = await response.json();
             console.log(resultado);
             ui.clearEditarPreguntaoRespuestasInputs()
@@ -617,7 +634,7 @@ async function eliminarUsuarios() {
         headers: {
             "Content-Type": "application/json",
         },
-        body: JSON.stringify({id: result})
+        body: JSON.stringify({ id: result })
     })
     let resultado = await response.json()
     console.log(resultado)
@@ -634,7 +651,7 @@ async function llenarSelectPreguntaEliminar() {
     console.log(preguntas)
     let selectPregunta = ``
     for (let i = 0; i < preguntas.length; i++) {
-    selectPregunta += `<option value="${preguntas[i].id_pregunta}">
+        selectPregunta += `<option value="${preguntas[i].id_pregunta}">
         ${preguntas[i].id_pregunta} - ${preguntas[i].pregunta}
     </option>`;
     }
@@ -647,7 +664,7 @@ async function llenarSelectPreguntaEditar() {
     console.log(preguntas)
     let selectPregunta = ``
     for (let i = 0; i < preguntas.length; i++) {
-    selectPregunta += `<option value="${preguntas[i].id_pregunta}">
+        selectPregunta += `<option value="${preguntas[i].id_pregunta}">
         ${preguntas[i].id_pregunta} - ${preguntas[i].pregunta}
     </option>`;
     }
@@ -660,7 +677,7 @@ async function llenarSelectUsuarios() {
     console.log(usuarios)
     let selectUsuario = ``
     for (let i = 0; i < usuarios.length; i++) {
-    selectUsuario += `<option value="${usuarios[i].id}">
+        selectUsuario += `<option value="${usuarios[i].id}">
         ${usuarios[i].id} - ${usuarios[i].usuario}
     </option>`;
     }
@@ -673,7 +690,7 @@ async function llenarSelectUsuariosPuntaje() {
     console.log(usuarios)
     let selectUsuario = ``
     for (let i = 0; i < usuarios.length; i++) {
-    selectUsuario += `<option value="${usuarios[i].id}">
+        selectUsuario += `<option value="${usuarios[i].id}">
         ${usuarios[i].id} - ${usuarios[i].usuario}  - Puntaje: ${usuarios[i].puntaje}
     </option>`;
     }
@@ -681,7 +698,7 @@ async function llenarSelectUsuariosPuntaje() {
     document.getElementById("SelectPuntaje").innerHTML += selectUsuario
 }
 
-async function buscarRespuestasDePregunta(){
+async function buscarRespuestasDePregunta() {
     let idPregunta = ui.getIdPreguntaEditar()
     const respuestas = await conseguirRespuestasEspecificas(idPregunta)
     console.log(respuestas)
@@ -692,15 +709,15 @@ async function buscarRespuestasDePregunta(){
             ${respuestas[i].id_respuesta} - '${respuestas[i].respuesta}' 
         </option>`;
     }
-        document.getElementById("SelectRespuesta").innerHTML += selectRespuesta
-    
+    document.getElementById("SelectRespuesta").innerHTML += selectRespuesta
+
 }
 
 /*-------------------------------------------------------------------------------------------------------------------------------*/
 
 
 // CERRAR SESION !!!!!!!!
-function cerrarsesion(){
+function cerrarsesion() {
     if (confirm("¿Queres cerrar sesion?") == true) {
         idLogged = -1
         ui.clearLoginInputs()

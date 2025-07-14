@@ -1,211 +1,288 @@
-#pelota-carga {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    animation: spinner 5s infinite;
+/* Contenedor principal del juego */
+.ContenedorJuego {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    font-family: 'Arial', sans-serif;
 }
 
-
-@-webkit-keyframes spinner {
-    from {
-        transform: scale(1) rotate(360deg);
-        -webkit-transform: scale(1) rotate(360deg);
-        background-color: #ee3c80;
-    }
-    8% {
-        transform: scale(0.8) rotate(720deg);
-        -webkit-transform: scale(0.8) rotate(720deg);
-        background-color: #1055b1;
-    }
-    17% {
-        transform: scale(1) rotate(1080deg);
-        -webkit-transform: scale(1) rotate(1080deg);
-        background-color: #1055b1;
-    }
-    25% {
-        transform: scale(0.8) rotate(1440deg);
-        -webkit-transform: scale(0.8) rotate(1440deg);
-        background-color: #17a84b;
-    }
-    34% {
-        transform: scale(1) rotate(1800deg);
-        -webkit-transform: scale(1) rotate(1800deg);
-        background-color: #17a84b;
-    }
-    42% {
-        transform: scale(0.8) rotate(2160deg);
-        -webkit-transform: scale(0.8) rotate(2160deg);
-        background-color: #f6c92f;
-    }
-    51% {
-        transform: scale(1) rotate(2520deg);
-        -webkit-transform: scale(1) rotate(2520deg);
-        background-color: #f6c92f;
-    }
-    59% {
-        transform: scale(0.8) rotate(2880deg);
-        -webkit-transform: scale(0.8) rotate(2880deg);
-        background-color: #ff6c00;
-    }
-    67% {
-        transform: scale(1) rotate(3240deg);
-        -webkit-transform: scale(1) rotate(3240deg);
-        background-color: #ff6c00;
-    }
-    75% {
-        transform: scale(0.8) rotate(3600deg);
-        -webkit-transform: scale(0.8) rotate(3600deg);
-        background-color: #ed1c24;
-    }
-    84% {
-        transform: scale(1) rotate(3960deg);
-        -webkit-transform: scale(1) rotate(3960deg);
-        background-color: #ed1c24;
-    }
-    92% {
-        transform: scale(0.8) rotate(4320deg);
-        -webkit-transform: scale(0.8) rotate(4320deg);
-        background-color: #ee3c80;
-    }
-    to {
-        transform: scale(1) rotate(4680deg);
-        -webkit-transform: scale(1) rotate(4680deg);
-        background-color: #ee3c80;
-    }
+/* Encabezado del juego */
+#EncabezadoJuego {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+    margin-bottom: 30px;
 }
 
-@-moz-keyframes spinner {
-    from {
-        transform: scale(1) rotate(360deg);
-        -webkit-transform: scale(1) rotate(360deg);
-        background-color: #ee3c80;
-    }
-    8% {
-        transform: scale(0.8) rotate(720deg);
-        -webkit-transform: scale(0.8) rotate(720deg);
-        background-color: #1055b1;
-    }
-    17% {
-        transform: scale(1) rotate(1080deg);
-        -webkit-transform: scale(1) rotate(1080deg);
-        background-color: #1055b1;
-    }
-    25% {
-        transform: scale(0.8) rotate(1440deg);
-        -webkit-transform: scale(0.8) rotate(1440deg);
-        background-color: #17a84b;
-    }
-    34% {
-        transform: scale(1) rotate(1800deg);
-        -webkit-transform: scale(1) rotate(1800deg);
-        background-color: #17a84b;
-    }
-    42% {
-        transform: scale(0.8) rotate(2160deg);
-        -webkit-transform: scale(0.8) rotate(2160deg);
-        background-color: #f6c92f;
-    }
-    51% {
-        transform: scale(1) rotate(2520deg);
-        -webkit-transform: scale(1) rotate(2520deg);
-        background-color: #f6c92f;
-    }
-    59% {
-        transform: scale(0.8) rotate(2880deg);
-        -webkit-transform: scale(0.8) rotate(2880deg);
-        background-color: #ff6c00;
-    }
-    67% {
-        transform: scale(1) rotate(3240deg);
-        -webkit-transform: scale(1) rotate(3240deg);
-        background-color: #ff6c00;
-    }
-    75% {
-        transform: scale(0.8) rotate(3600deg);
-        -webkit-transform: scale(0.8) rotate(3600deg);
-        background-color: #ed1c24;
-    }
-    84% {
-        transform: scale(1) rotate(3960deg);
-        -webkit-transform: scale(1) rotate(3960deg);
-        background-color: #ed1c24;
-    }
-    92% {
-        transform: scale(0.8) rotate(4320deg);
-        -webkit-transform: scale(0.8) rotate(4320deg);
-        background-color: #ee3c80;
-    }
-    to {
-        transform: scale(1) rotate(4680deg);
-        -webkit-transform: scale(1) rotate(4680deg);
-        background-color: #ee3c80;
-    }
+#EncabezadoJuego .pos1 {
+    font-size: 2.5em;
+    font-weight: bold;
+    color: #fff;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    letter-spacing: 2px;
 }
 
-@keyframes spinner {
-    from {
-        transform: scale(1) rotate(360deg);
-        -webkit-transform: scale(1) rotate(360deg);
-        background-color: #ee3c80;
-    }
-    8% {
-        transform: scale(0.8) rotate(720deg);
-        -webkit-transform: scale(0.8) rotate(720deg);
-        background-color: #1055b1;
-    }
-    17% {
-        transform: scale(1) rotate(1080deg);
-        -webkit-transform: scale(1) rotate(1080deg);
-        background-color: #1055b1;
-    }
-    25% {
-        transform: scale(0.8) rotate(1440deg);
-        -webkit-transform: scale(0.8) rotate(1440deg);
-        background-color: #17a84b;
-    }
-    34% {
-        transform: scale(1) rotate(1800deg);
-        -webkit-transform: scale(1) rotate(1800deg);
-        background-color: #17a84b;
-    }
-    42% {
-        transform: scale(0.8) rotate(2160deg);
-        -webkit-transform: scale(0.8) rotate(2160deg);
-        background-color: #f6c92f;
-    }
-    51% {
-        transform: scale(1) rotate(2520deg);
-        -webkit-transform: scale(1) rotate(2520deg);
-        background-color: #f6c92f;
-    }
-    59% {
-        transform: scale(0.8) rotate(2880deg);
-        -webkit-transform: scale(0.8) rotate(2880deg);
-        background-color: #ff6c00;
-    }
-    67% {
-        transform: scale(1) rotate(3240deg);
-        -webkit-transform: scale(1) rotate(3240deg);
-        background-color: #ff6c00;
-    }
-    75% {
-        transform: scale(0.8) rotate(3600deg);
-        -webkit-transform: scale(0.8) rotate(3600deg);
-        background-color: #ed1c24;
-    }
-    84% {
-        transform: scale(1) rotate(3960deg);
-        -webkit-transform: scale(1) rotate(3960deg);
-        background-color: #ed1c24;
-    }
-    92% {
-        transform: scale(0.8) rotate(4320deg);
-        -webkit-transform: scale(0.8) rotate(4320deg);
-        background-color: #ee3c80;
-    }
-    to {
-        transform: scale(1) rotate(4680deg);
-        -webkit-transform: scale(1) rotate(4680deg);
-        background-color: #ee3c80;
-    }
+/* Botones del menú */
+.botonesMenu {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
 }
+
+.botonesMenu button {
+    padding: 12px 20px;
+    background: rgba(255, 255, 255, 0.2);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 25px;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+}
+
+.botonesMenu button:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.botonesMenu button:active {
+    transform: translateY(0);
+}
+
+/* Secciones del juego */
+.juego-seccion {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 15px;
+    padding: 30px;
+    margin-top: 20px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Mensaje de inicio */
+.mensajeInicio {
+    text-align: center;
+    margin-bottom: 30px;
+    padding: 20px;
+    background: linear-gradient(45deg, #ffeaa7, #fdcb6e);
+    border-radius: 10px;
+    border-left: 5px solid #e17055;
+}
+
+.mensajeInicio label {
+    font-size: 16px;
+    color: #2d3436;
+    font-weight: 500;
+    line-height: 1.5;
+}
+
+/* Contenedor principal del juego */
+.contenedor {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+}
+
+/* Sección aleatoria */
+.aleatorio {
+    text-align: center;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+    width: 100%;
+}
+
+.aleatorio label {
+    display: block;
+    font-size: 18px;
+    color: #2d3436;
+    margin-bottom: 25px;
+    font-weight: 500;
+    line-height: 1.4;
+}
+
+.aleatorio button {
+    padding: 15px 30px;
+    background: linear-gradient(45deg, #00b894, #00cec9);
+    border: none;
+    border-radius: 30px;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 15px rgba(0, 184, 148, 0.3);
+}
+
+.aleatorio button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0, 184, 148, 0.4);
+}
+
+.aleatorio button:active {
+    transform: translateY(-1px);
+}
+
+.aleatorio img {
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Estilos para contenido insertado dinámicamente */
+
+/* Categoría seleccionada */
+.categoria {
+    display: block;
+    font-size: 24px;
+    font-weight: bold;
+    color: #2d3436;
+    text-align: center;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Botón comenzar */
+.comenzar {
+    padding: 15px 35px;
+    background: linear-gradient(45deg, #e17055, #fdcb6e);
+    border: none;
+    border-radius: 30px;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 20px;
+    box-shadow: 0 4px 15px rgba(225, 112, 85, 0.3);
+}
+
+.comenzar:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(225, 112, 85, 0.4);
+}
+
+/* Contenedor de pregunta */
+#prePregunta {
+    text-align: center;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    width: 100%;
+}
+
+#prePregunta img {
+    border-radius: 10px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    max-width: 100%;
+    height: auto;
+}
+
+/* Pregunta actual */
+#preguntaResponder {
+    text-align: center;
+    margin: 20px 0;
+}
+
+#preguntaResponder h3 {
+    font-size: 22px;
+    color: #2d3436;
+    margin: 0;
+    line-height: 1.4;
+    font-weight: 600;
+}
+
+/* Contenedor de respuestas */
+#respuestasPregunta {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 15px;
+    margin-top: 30px;
+    max-width: 800px;
+    width: 100%;
+}
+
+/* Botones de respuesta */
+#respuestasPregunta button {
+    padding: 15px 20px;
+    background: linear-gradient(45deg, #74b9ff, #0984e3);
+    border: none;
+    border-radius: 12px;
+    color: white;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 3px 10px rgba(116, 185, 255, 0.3);
+    min-height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    line-height: 1.3;
+}
+
+#respuestasPregunta button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(116, 185, 255, 0.4);
+    background: linear-gradient(45deg, #0984e3, #74b9ff);
+}
+
+#respuestasPregunta button:active {
+    transform: translateY(0);
+}
+
+/* Estilos para las secciones de información */
+#reglas, #comoJugar, #ranking {
+    color: #2d3436;
+}
+
+#reglas h2, #comoJugar h2, #ranking h2 {
+    color: #2d3436;
+    font-size: 28px;
+    margin-bottom: 20px;
+    text-align: center;
+    border-bottom: 3px solid #74b9ff;
+    padding-bottom: 10px;
+}
+
+#reglas ul, #ranking ul {
+    list-style: none;
+    padding: 0;
+}
+
+#reglas li, #ranking li {
+    background: rgba(116, 185, 255, 0.1);
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 8px;
+    border-left: 4px solid #74b9ff;
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+#comoJugar p {
+    font-size: 16px;
+    line-height: 1.6;
+    margin: 15px 0;
+    padding: 15px;
+    background: rgba(116, 185, 255, 0.1);
+    border-radius: 8px;
+    border-left: 4px solid #74b9ff;
+}
+

@@ -550,6 +550,16 @@ app.put('/EditarPregunta', async function(req,res){
     res.send({mensaje: "Pregunta editada con exito"})
 })
 
+
+app.put('/EditarRutaImagen', async function(req,res){
+    const response = await realizarQuery(`
+        UPDATE Preguntas
+        SET imagen = '${req.body.imagen}'
+        WHERE id_pregunta = ${req.body.id_pregunta}
+    `)
+    res.send({mensaje: "Imagen editada"})
+})
+
 app.post('/conseguirIdPregunta', async function(req,res){
     try {
         const respuesta = await realizarQuery(`
@@ -606,6 +616,30 @@ app.post('/preguntaResponder', async function(req,res){
         const respuesta = await realizarQuery(`
             SELECT pregunta FROM Preguntas WHERE categoria = '${req.body.categoria}'
         `)
+        res.send(respuesta)
+    } catch (error) {
+        console.log(error)
+    }
+})
+
+app.post('/preguntaImagen', async function(req,res){
+    try {
+        const respuesta = await realizarQuery(`
+            SELECT imagen FROM Preguntas WHERE pregunta = '${req.body.pregunta}'    
+        `)
+        console.log(respuesta)
+        res.send(respuesta)
+    } catch (error) {
+        console.log(error)
+    }
+})
+
+app.post('/verificacionRespuesta', async function (req,res) {
+    try {
+        const respuesta = await realizarQuery(`
+            Select correcta FROM Respuestas WHERE respuesta = '${req.body.respuesta}' and id_pregunta = ${req.body.id_pregunta}   
+        `)
+        console.log(respuesta)
         res.send(respuesta)
     } catch (error) {
         console.log(error)

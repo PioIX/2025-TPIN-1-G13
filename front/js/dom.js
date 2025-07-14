@@ -113,9 +113,15 @@ class UserInterface {
         return document.getElementById("SelectPreguntaEditar").value
     }
 
+    getImagenEditar() {
+        return document.getElementById("NuevaRutaImagen").value
+    }
+
     getNuevaPregunta(){
         return document.getElementById("NuevaPregunta").value
     }
+
+    
 
     // GET USUARIOS O SIMILAR ------------------------------------------------------------------------------------
 
@@ -177,8 +183,9 @@ class UserInterface {
         document.getElementById("mensajeInicio").style.display = 'none';
         document.getElementById("pantalla-carga").style.display = "flex";
         document.getElementById("aleatorio").style.display = "none";
-        await new Promise(resolve => setTimeout(resolve, 2000))
+        await new Promise(resolve => setTimeout(resolve, 5000))
         document.getElementById("pantalla-carga").style.display = "none";
+        // HACER CONTADOR DEL TIEMPO GENERAL
     }
 
     rellenarPrePregunta(categoria){
@@ -199,19 +206,45 @@ class UserInterface {
         div.style.display = 'block';
     }
 
-    rellenarPregunta(pregunta, imagen, opciones) {
+    rellenarPregunta(preguntaActual, respuestas, imagen) {
         // hacer timer
-        let div = document.getElementById("preguntaResponder")
-        div.style.display = 'block'
-        if (imagen.length > 0) {
+        document.getElementById("prePregunta").style.display = 'none';
+        let divPregunta = document.getElementById("preguntaResponder")
+        divPregunta.style.display = 'block'
+        if (imagen != undefined) {
             let info = 
                 `
-                en este info se agrega un <img src 'url de la variable imagen' y despues la pregunta y sus opciones
+                <img src="${imagen}" alt="Imagen de la Pregunta">
+                <h3>'${preguntaActual}'</h3>
             `;
+            divPregunta.innerHTML = info
+        } else {
+            let info = 
+                `
+                <h3>${preguntaActual}</h3>
+            `;
+            divPregunta.innerHTML = info
         }
-        
-        
+
+        let divRespuesta = document.getElementById("respuestasPregunta")
+        divRespuesta.style.display = 'block';
+        let infoOptions = ``;
+        for (let i = 0; i < respuestas.length; i++) {
+            infoOptions += `
+                <button onclick="VerificarRespuesta(this)" id="respuesta${i}">${respuestas[i].respuesta}</button>
+        `;
+        }
+        divRespuesta.innerHTML = infoOptions
     }
+
+
+
+
+    // VERIFICACIONES
+
+
 }
+
+
 
 const ui = new UserInterface();
