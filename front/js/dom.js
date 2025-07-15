@@ -199,7 +199,7 @@ class UserInterface {
         let info =
             `
             <label class="categoria">- ` + tematica[x].nombre + ` -</label>
-            <img src="` + tematica[x].icono + `" alt="Categoría" width="200px" height="200px">
+            <img src="` + tematica[x].icono + `" alt="Categoría">
             <button class="comenzar" onclick="PreguntasJuego()">Comenzar con la pregunta</button>
         `;
         div.innerHTML = info
@@ -207,20 +207,26 @@ class UserInterface {
     }
 
     rellenarPregunta(preguntaActual, respuestas, imagen) {
-        // hacer timer
         document.getElementById("prePregunta").style.display = 'none';
         let divPregunta = document.getElementById("preguntaResponder")
         divPregunta.style.display = 'block'
+        let barraHTML = `
+        <div id="barra-timer">
+            <div id="barra-interna"></div>
+        </div>
+        `;
         if (imagen != undefined) {
             let info = 
                 `
+                ${barraHTML}
                 <img src="${imagen}" alt="Imagen de la Pregunta">
-                <h3>'${preguntaActual}'</h3>
+                <h3 class="pregunta-juego">${preguntaActual}</h3>
             `;
             divPregunta.innerHTML = info
         } else {
             let info = 
                 `
+                ${barraHTML}
                 <h3>${preguntaActual}</h3>
             `;
             divPregunta.innerHTML = info
@@ -235,9 +241,22 @@ class UserInterface {
         `;
         }
         divRespuesta.innerHTML = infoOptions
+        iniciarTimer()
     }
 
+    deshabilitarRespuestas() {
+        document.getElementById("respuestasPregunta").style.display = 'none';
+    }
 
+    deshabilitarRespuestasCorrectas() {
+        document.getElementById("respuestasPregunta").style.display = 'none';
+        document.getElementById("preguntaResponder").innerHTML += `
+                    <div class="mensajeCorrecta">
+                    <p>BIEN HECHO, HAS ACERTADO LA PREGUNTA</p>
+                    <button onclick="juegoCarga()">Continuar</button>
+                    </div>
+                `;
+    }
 
 
     // VERIFICACIONES

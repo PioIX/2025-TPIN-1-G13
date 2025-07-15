@@ -2,9 +2,9 @@ let preguntaActual = null
 let contadorPuntos = 0
 let sumapuntos = 100
 let resta = 25
-let tiempo = 0
+let tiempoPartida = 0
 let contadorPreguntas = 0
-
+let preguntasYaSeleccionadas = []
 
 
 async function conseguirCategorias() {
@@ -49,11 +49,20 @@ async function conseguirVector() {
 
 
 async function juegoCarga() {
+    document.getElementById("preguntaResponder").style.display = 'none';
     if (contadorPreguntas <= 20) {
         ui.PantallaCarga()
         let vector = await conseguirVector()
         preguntaActual = vector[0]
         console.log(preguntaActual)
+        let id = await conseguirIdPregunta(preguntaActual)
+        for (let i = 0; i < preguntasYaSeleccionadas.length; i++) {
+            if (preguntasYaSeleccionadas[i] == id) {
+                console.log("Esta pregunta ya fue seleccionada")
+                juegoCarga()
+            }
+        }
+        preguntasYaSeleccionadas.push(id)
         let categoria = vector[1]
         console.log("Pregunta: ", preguntaActual, "- Categoria: ", categoria)
         await new Promise(resolve => setTimeout(resolve, 4750))
@@ -117,9 +126,53 @@ async function VerificarRespuesta(boton) {
         sumapuntos -= resta
         //ui.funciondePuntajeyCambiodeColores
     } else {
+        ui.deshabilitarRespuestasCorrectas()
+        respondido = true
+        clearInterval(timerInterval)
+        let barra = document.getElementById("barra-timer");
+        if (barra) barra.style.display = "none";
         console.log("La respuesta es correcta")
         contadorPuntos += sumapuntos
 
         //ui.funciondePuntajeyCambiodeColores
     }
+}
+
+let timerInterval;
+let tiempoTotal = 10; // segundos
+let tiempoRestante = tiempoTotal;
+let respondido = false;
+
+function iniciarTimer() {
+    const barra = document.getElementById("barra-interna");
+    tiempoRestante = tiempoTotal;
+    respondido = false;
+
+    barra.style.width = "100%";
+    barra.style.backgroundColor = "#27ae60"; // verde inicial
+
+    timerInterval = setInterval(() => {
+        tiempoRestante--;
+
+        let porcentaje = (tiempoRestante / tiempoTotal) * 100;
+        barra.style.width = porcentaje + "%";
+
+        // Cambiar color según tiempo
+        if (tiempoRestante <= 3) {
+            barra.style.backgroundColor = "#e74c3c"; // rojo
+        } else if (tiempoRestante <= 6) {
+            barra.style.backgroundColor = "#f1c40f"; // amarillo
+        }
+
+        // Si se acabó el tiempo
+        if (tiempoRestante <= 0) {
+            clearInterval(timerInterval);
+            if (!respondido) {
+                document.getElementById("preguntaResponder").innerHTML += `
+                    <div class="mensajeTiempo">⏰ ¡Se acabó el tiempo!</div>
+                `;
+                ui.deshabilitarRespuestas();
+            }
+        }
+    }, 1000);
 }

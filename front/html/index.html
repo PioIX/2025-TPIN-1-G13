@@ -121,7 +121,7 @@
             <div id="eliminarUsuario" class="admin-seccion" style="display:none;">
                 <h3>Eliminar Usuario</h3>
                 <select id="SelectUsuario">
-                
+
                 </select>
                 <button onclick="eliminarUsuarios()">Eliminar Usuario de la BD</button>
             </div>
@@ -138,6 +138,7 @@
         <!-- PARTE DEL JUEGO PREGUNTADOS //////////////////////////////////////////////////////////////////-->
         <section id="notepad" class="ContenedorJuego" style="display: none;">
             <header id="EncabezadoJuego">
+                <img src="../IMAGES/PreguntadosLogo2024.webp" id="imagenLogoEncabezado">
                 <label class="pos1">PREGUNTADOS</label>
                 <div class="botonesMenu">
                     <button onclick="ui.mostrarSeccionJUGAR('jugar')">Jugar</button>
@@ -148,15 +149,17 @@
             </header>
             <section id="jugar" class="juego-seccion" style="display: none;">
                 <div class="mensajeInicio" id="mensajeInicio">
-                    <label>Antes de comenzar el juego, te recomendamos leer las reglas, las estadísticas y aprender a cómo jugarlo</label>
+                    <label>Antes de comenzar el juego, te recomendamos leer las reglas, las estadísticas y aprender a
+                        cómo jugarlo</label>
                 </div>
                 <div class="contenedor" id="seleccion">
                     <div class="aleatorio" id="aleatorio">
-                        <label>Presione el botón para que le toque una categoria aleatoria</label>
+                        <label>Presione el botón para que le toque una categoria aleatoria. ¡Suerte!</label>
+                        <img src="../IMAGES/ImagenPREJUEGO.webp" alt="icono preguntados">
                         <button onclick="juegoCarga()">¡Comenzar!</button>
-                        <img src="../IMAGES/preguntados.png" alt="icono preguntados" width="90px" height="90px">
                     </div>
-                    <div id="pantalla-carga" style="display: none; justify-content: center; align-items: center; height: 200px;">
+                    <div id="pantalla-carga"
+                        style="display: none; justify-content: center; align-items: center; height: 200px;">
                         <div class="loader">
                             <div class="category ent"></div>
                             <div class="category geo"></div>
@@ -166,12 +169,12 @@
                             <div class="category art"></div>
                         </div>
                     </div>
-                    <div id="prePregunta"></div>
-                    <div id="preguntaResponder"></div>
-                    <div id="respuestasPregunta"></div>
-                </section>
+                    <div id="prePregunta" style="display: none;"></div>
+                    <div id="preguntaResponder" style="display: none;"></div>
+                    <div id="respuestasPregunta" style="display: none;"></div>
+            </section>
             <section id="reglas" class="juego-seccion" style="display: none;">
-            <h2>Reglas del juego</h2>
+                <h2>Reglas del juego</h2>
                 <ul>
                     <li>Responde correctamente la mayor cantidad de preguntas posibles.</li>
                     <li>Cada respuesta correcta suma puntos.</li>
@@ -227,10 +230,11 @@
             llenarSelectUsuarios();
             llenarSelectUsuariosPuntaje();
         });
-</script>
+    </script>
 </body>
 <script src="../js/dom.js"></script>
 <script src="../js/index.js"></script>
 <script src="../js/objetos.js"></script>
 <script src="../js/codigoJuego.js"></script>
+
 </html>

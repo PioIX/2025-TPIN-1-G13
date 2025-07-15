@@ -1,6 +1,6 @@
 const tematica = [{
     nombre: "Ciencia",
-    icono: "../IMAGES/ciencia.png"
+    icono: "../IMAGES/Ciencia.webp"
 }, {
     nombre: "Entretenimiento",
     icono: "../IMAGES/entretenimiento.png"
