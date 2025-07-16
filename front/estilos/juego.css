@@ -455,3 +455,27 @@
 #tablaRanking tbody tr:nth-child(3) td {
     background-color: #cd7f3233; /* bronce */
 }
+
+#cronometro {
+    font-family: 'Segoe UI', sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    color: #ffffff;
+    background: linear-gradient(to right, #ff416c, #ff4b2b); /* fondo degradado */
+    padding: 10px 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    display: inline-block;
+    margin: 10px auto;
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+#cronometro:hover {
+    transform: scale(1.05);
+}
+
+.numeroPregunta h2{
+    font-weight: 400;
+    font-size: 16px;
+}

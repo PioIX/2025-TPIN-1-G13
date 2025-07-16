@@ -172,7 +172,6 @@ async function existsUser(nombre, password) {
             body: JSON.stringify({ usuario: nombre, contraseña: password }),
         })
         let result = await respuesta.json()
-        console.log(result)
         return result
     } catch (error) {
         console.log(error)
@@ -189,7 +188,6 @@ async function existsUserRegister(nombre) {
             body: JSON.stringify({ usuario: nombre }),
         })
         let result = await respuesta.json()
-        console.log(result)
         return result
     } catch (error) {
         console.log(error)
@@ -224,7 +222,6 @@ async function esAdmin(nombre) {
 
         })
         let result = await respuesta.json()
-        console.log(result)
         if (result.length > 0) {
             return result[0].es_admin; // ✅ devolvemos solo el número
         } else {
@@ -240,11 +237,9 @@ async function login() {
         let nombre = ui.getUser();
         let password = ui.getPassword();
         let resultado = await existsUser(nombre, password)
-        console.log(resultado)
         if (resultado.length > 0) {  // SEGUIR SISTEMA DE LENGHT PARA USUARIOS
             idLogged = await conseguirID(nombre);
             let admin = await esAdmin(nombre)
-            console.log(admin)
             if (admin > 0) {
                 ui.clearLoginInputs()
                 ui.clearAgregarPreguntasyRespuestasInputs()
@@ -277,7 +272,6 @@ async function conseguirDatos(nombre, password) {
             tiempo: 0,
             es_admin: 0
         }
-        console.log(datos)
         return datos
     } catch (error) {
         console.log(error)
@@ -287,9 +281,7 @@ async function conseguirDatos(nombre, password) {
 async function newuser(nombre, password) {
     try {
         let resultado = await existsUserRegister(nombre)
-        console.log(resultado)
         if (resultado.length == 0) {
-            console.log("hola")
             let datos = await conseguirDatos(nombre, password)
             const response = await fetch(`http://localhost:4006/insertarUsuario`, {
                 method: "POST", //GET, POST, PUT o DELETE
@@ -299,7 +291,6 @@ async function newuser(nombre, password) {
                 body: JSON.stringify(datos)
             })
             let result = await response.json()
-            console.log(result)
             return 1
         } else {
             return -1;
@@ -313,7 +304,6 @@ async function registrar() {
     try {
         let nombre = ui.getUser();
         let password = ui.getPassword()
-        console.log(nombre, password)
         let creado = await newuser(nombre, password)
         if (creado > 0) {
             ui.clearLoginInputs()
@@ -330,193 +320,233 @@ async function registrar() {
 // PREGUNTAS
 
 async function datosPregunta() {
-    let datos = {
-        pregunta: ui.getPregunta(),
-        categoria: ui.getCategoria(),
-        imagen: ui.getImagen()
+    try {
+        let datos = {
+            pregunta: ui.getPregunta(),
+            categoria: ui.getCategoria(),
+            imagen: ui.getImagen()
+        }
+        return datos
+    } catch (error) {
+        console.log(error)
     }
-    return datos
 }
 
 async function postPregunta() {
-    let datos = await datosPregunta()
-    console.log(datos)
-    const response = await fetch(`http://localhost:4006/subirPregunta`, {
-        method: "POST", //GET, POST, PUT o DELETE
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(datos)
-    })
-    let result = await response.json()
-    console.log(result)
-    ui.showModal("Pregunta subida con éxito")
+    try {
+        let datos = await datosPregunta()
+        const response = await fetch(`http://localhost:4006/subirPregunta`, {
+            method: "POST", //GET, POST, PUT o DELETE
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(datos)
+        })
+        let result = await response.json()
+        ui.showModal("Pregunta subida con éxito")
+    } catch (error) {
+        console.log(error)
+    }
 }
 
 async function conseguirIdPregunta(pregunta) {
-    const response = await fetch(`http://localhost:4006/conseguirIdPregunta`, {
-        method: "POST", //GET, POST, PUT o DELETE
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({pregunta: pregunta })
-    })
-    let result = await response.json()
-    console.log(result)
-    if (result.length > 0) {
-        return result[0].id_pregunta; // ✅ devolvemos solo el número
-    } else {
-        return -1; // o null, según cómo quieras manejar errores
+    try {
+        const response = await fetch(`http://localhost:4006/conseguirIdPregunta`, {
+            method: "POST", //GET, POST, PUT o DELETE
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({pregunta: pregunta })
+        })
+        let result = await response.json()
+        if (result.length > 0) {
+            return result[0].id_pregunta; // ✅ devolvemos solo el número
+        } else {
+            return -1; // o null, según cómo quieras manejar errores
+        }
+    } catch (error) {
+        console.log(error)
     }
 }
 
 
 async function datosRespuesta() {
-    let pregunta = ui.getPregunta();
-    let id_pregunta = await conseguirIdPregunta(pregunta);
-
-    let respuestas = [];
-
-    for (let i = 1; i <= 4; i++) {
-        // ID del input de texto
-        let inputTexto = document.getElementById(`opcion${i === 1 ? "Uno" : i === 2 ? "Dos" : i === 3 ? "Tres" : "Cuatro"}`);
-        let inputCheckbox = document.getElementById(`opcion${i}`);
-
-        // Validamos que haya algo escrito
-        if (inputTexto.value.trim() !== "") {
-            respuestas.push({
-                id_pregunta: id_pregunta,
-                correcta: inputCheckbox.checked,
-                respuesta: inputTexto.value.trim()
-            });
+    try {
+        let pregunta = ui.getPregunta();
+        let id_pregunta = await conseguirIdPregunta(pregunta);
+    
+        let respuestas = [];
+    
+        for (let i = 1; i <= 4; i++) {
+            // ID del input de texto
+            let inputTexto = document.getElementById(`opcion${i === 1 ? "Uno" : i === 2 ? "Dos" : i === 3 ? "Tres" : "Cuatro"}`);
+            let inputCheckbox = document.getElementById(`opcion${i}`);
+    
+            // Validamos que haya algo escrito
+            if (inputTexto.value.trim() !== "") {
+                respuestas.push({
+                    id_pregunta: id_pregunta,
+                    correcta: inputCheckbox.checked,
+                    respuesta: inputTexto.value.trim()
+                });
+            }
         }
+    
+        return respuestas;
+    } catch (error) {
+        console.log(error)
     }
-
-    return respuestas;
 }
 
 
 
 async function postRespuestas() {
-    let respuestas = await datosRespuesta();
-
-    for (let respuesta of respuestas) {
-        const response = await fetch("http://localhost:4006/subirRespuesta", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(respuesta)
-        });
-
-        let result = await response.json();
-        console.log("Respuesta subida:", result);
+    try {
+        let respuestas = await datosRespuesta();
+    
+        for (let respuesta of respuestas) {
+            const response = await fetch("http://localhost:4006/subirRespuesta", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(respuesta)
+            });
+    
+            let result = await response.json();
+        }
+        ui.clearAgregarPreguntasyRespuestasInputs()
+        ui.showModal("Respuestas subidas con éxito - Vinculadas a la pregunta");
+    } catch (error) {
+        console.log(error)
     }
-    ui.clearAgregarPreguntasyRespuestasInputs()
-    ui.showModal("Respuestas subidas con éxito - Vinculadas a la pregunta");
 }
 
 
 async function conseguirPregunta() {
-    const response = await fetch(`http://localhost:4006/preguntas`, {
-        method: "GET", //GET, POST, PUT o DELETE
-        headers: {
-            "Content-Type": "application/json",
-        },
-    })
-    let result = await response.json()
-    return result
+    try {
+        const response = await fetch(`http://localhost:4006/preguntas`, {
+            method: "GET", //GET, POST, PUT o DELETE
+            headers: {
+                "Content-Type": "application/json",
+            },
+        })
+        let result = await response.json()
+        return result
+    } catch (error) {
+        console.log(error)
+    }
 }
 
 
 
 async function eliminarPregunta() {
-    let result = ui.getIdPreguntaEliminar()
-    console.log(result)
-    const response = await fetch(`http://localhost:4006/EliminarPregunta`, {
-        method: "DELETE", //GET, POST, PUT o DELETE
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ id_pregunta: result })
-    })
-    let resultado = await response.json()
-    console.log(resultado)
-    ui.showModal("Pregunta eliminada")
+    try {
+        let result = ui.getIdPreguntaEliminar()
+        const response = await fetch(`http://localhost:4006/EliminarPregunta`, {
+            method: "DELETE", //GET, POST, PUT o DELETE
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ id_pregunta: result })
+        })
+        let resultado = await response.json()
+        ui.showModal("Pregunta eliminada")
+    } catch (error) {
+        console.log(error)
+    }
 }
 
 
 async function conseguirUsuarios() {
-    const response = await fetch(`http://localhost:4006/usuarios`, {
-        method: "GET", //GET, POST, PUT o DELETE
-        headers: {
-            "Content-Type": "application/json",
-        },
-    })
-    let result = await response.json()
-    return result
+    try {
+        const response = await fetch(`http://localhost:4006/usuarios`, {
+            method: "GET", //GET, POST, PUT o DELETE
+            headers: {
+                "Content-Type": "application/json",
+            },
+        })
+        let result = await response.json()
+        return result
+    } catch (error) {
+        console.log(error)
+    }
 }
 
 async function conseguirRespuestas() {
-    const response = await fetch(`http://localhost:4006/respuestas`, {
-        method: "GET", //GET, POST, PUT o DELETE
-        headers: {
-            "Content-Type": "application/json",
-        },
-    })
-    let result = await response.json()
-    return result
+    try {
+        const response = await fetch(`http://localhost:4006/respuestas`, {
+            method: "GET", //GET, POST, PUT o DELETE
+            headers: {
+                "Content-Type": "application/json",
+            },
+        })
+        let result = await response.json()
+        return result
+    } catch (error) {
+        console.log(error)
+    }
 }
 
 async function conseguirRespuestasEspecificas(idPregunta) {
-    const response = await fetch(`http://localhost:4006/respuestasEsp`, {
-        method: "POST", //GET, POST, PUT o DELETE
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ id_pregunta: idPregunta })
-    })
-    let result = await response.json()
-    return result
+    try {
+        const response = await fetch(`http://localhost:4006/respuestasEsp`, {
+            method: "POST", //GET, POST, PUT o DELETE
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ id_pregunta: idPregunta })
+        })
+        let result = await response.json()
+        return result
+    } catch (error) {
+        console.log(error)
+    }
 }
 
 /*-------------------------------------------------------------------------------------------------------------------------------------*/
 // EDITAR PREGUNTAAAAAAAAAAA ------------------------------------------------------------------------------------------
 
 async function editarRutaImagen(id, nuevaRutaImagen) {
-    const response = await fetch(`http://localhost:4006/EditarRutaImagen`, {
-        method: "PUT",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ id_pregunta: id, imagen: nuevaRutaImagen })
-    });
-    let resultado = await response.json();
-    console.log(resultado)
-    ui.showModal("Se editó la iamgen")
-    
-}
-
-async function editarContenidoPregunta(id, nuevaPregunta) {
-    let datos = {
-        id_pregunta: id,
-        pregunta: nuevaPregunta
-    }
-
     try {
-        const response = await fetch(`http://localhost:4006/EditarPregunta`, {
+        const response = await fetch(`http://localhost:4006/EditarRutaImagen`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify(datos)
+            body: JSON.stringify({ id_pregunta: id, imagen: nuevaRutaImagen })
         });
-
         let resultado = await response.json();
-        console.log(resultado)
         ui.showModal("Se editó la iamgen")
     } catch (error) {
-        console.log("Error al editar");
+        console.log(error)
+    }
+    
+}
+
+async function editarContenidoPregunta(id, nuevaPregunta) {
+    try {
+        let datos = {
+            id_pregunta: id,
+            pregunta: nuevaPregunta
+        }
+    
+        try {
+            const response = await fetch(`http://localhost:4006/EditarPregunta`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(datos)
+            });
+    
+            let resultado = await response.json();
+            ui.showModal("Se editó la iamgen")
+        } catch (error) {
+            console.log("Error al editar");
+        }
+    } catch (error) {
+        console.log(error)
     }
 }
 
@@ -569,7 +599,6 @@ async function EditarPuntajeUsuario() {
             });
 
             let resultado = await response.json();
-            console.log(resultado);
             ui.clearEditarPuntajeInputs()
             ui.showModal("Puntaje editado correctamente");
         } catch (error) {
@@ -608,7 +637,6 @@ async function editarRespuesta() {
             });
 
             let resultado = await response.json();
-            console.log(resultado);
             ui.clearEditarPreguntaoRespuestasInputs()
             ui.showModal("Respuesta editada correctamente");
         } catch (error) {
@@ -625,18 +653,22 @@ async function editarRespuesta() {
 // --------------------------------- ELMIINAR USUARIO -------------------------------
 
 async function eliminarUsuarios() {
-    let result = ui.getIdUsuarioEliminar()
-    console.log(result)
-    const response = await fetch(`http://localhost:4006/EliminarUsuario`, {
-        method: "DELETE", //GET, POST, PUT o DELETE
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ id: result })
-    })
-    let resultado = await response.json()
-    console.log(resultado)
-    ui.showModal("Usuario eliminado")
+    try {
+        let result = ui.getIdUsuarioEliminar()
+        console.log(result)
+        const response = await fetch(`http://localhost:4006/EliminarUsuario`, {
+            method: "DELETE", //GET, POST, PUT o DELETE
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ id: result })
+        })
+        let resultado = await response.json()
+        console.log(resultado)
+        ui.showModal("Usuario eliminado")
+    } catch (error) {
+        console.log(error)
+    }
 }
 
 
@@ -645,69 +677,89 @@ async function eliminarUsuarios() {
 // -------------------------------------- SELECTS ---------------------------------------------------------------------//
 
 async function llenarSelectPreguntaEliminar() {
-    let preguntas = await conseguirPregunta()
-    console.log(preguntas)
-    let selectPregunta = ``
-    for (let i = 0; i < preguntas.length; i++) {
-        selectPregunta += `<option value="${preguntas[i].id_pregunta}">
-        ${preguntas[i].id_pregunta} - ${preguntas[i].pregunta}
-    </option>`;
+    try {
+        let preguntas = await conseguirPregunta()
+        console.log(preguntas)
+        let selectPregunta = ``
+        for (let i = 0; i < preguntas.length; i++) {
+            selectPregunta += `<option value="${preguntas[i].id_pregunta}">
+            ${preguntas[i].id_pregunta} - ${preguntas[i].pregunta}
+        </option>`;
+        }
+    
+        document.getElementById("SelectPreguntaEliminar").innerHTML += selectPregunta
+    } catch (error) {
+        console.log(error)
     }
-
-    document.getElementById("SelectPreguntaEliminar").innerHTML += selectPregunta
 }
 
 async function llenarSelectPreguntaEditar() {
-    let preguntas = await conseguirPregunta()
-    console.log(preguntas)
-    let selectPregunta = ``
-    for (let i = 0; i < preguntas.length; i++) {
-        selectPregunta += `<option value="${preguntas[i].id_pregunta}">
-        ${preguntas[i].id_pregunta} - ${preguntas[i].pregunta}
-    </option>`;
+    try {
+        let preguntas = await conseguirPregunta()
+        console.log(preguntas)
+        let selectPregunta = ``
+        for (let i = 0; i < preguntas.length; i++) {
+            selectPregunta += `<option value="${preguntas[i].id_pregunta}">
+            ${preguntas[i].id_pregunta} - ${preguntas[i].pregunta}
+        </option>`;
+        }
+    
+        document.getElementById("SelectPreguntaEditar").innerHTML += selectPregunta
+    } catch (error) {
+        console.log(error)
     }
-
-    document.getElementById("SelectPreguntaEditar").innerHTML += selectPregunta
 }
 
 async function llenarSelectUsuarios() {
-    let usuarios = await conseguirUsuarios()
-    console.log(usuarios)
-    let selectUsuario = ``
-    for (let i = 0; i < usuarios.length; i++) {
-        selectUsuario += `<option value="${usuarios[i].id}">
-        ${usuarios[i].id} - ${usuarios[i].usuario}
-    </option>`;
+    try {
+        let usuarios = await conseguirUsuarios()
+        console.log(usuarios)
+        let selectUsuario = ``
+        for (let i = 0; i < usuarios.length; i++) {
+            selectUsuario += `<option value="${usuarios[i].id}">
+            ${usuarios[i].id} - ${usuarios[i].usuario}
+        </option>`;
+        }
+    
+        document.getElementById("SelectUsuario").innerHTML += selectUsuario
+    } catch (error) {
+        console.log(error)
     }
-
-    document.getElementById("SelectUsuario").innerHTML += selectUsuario
 }
 
 async function llenarSelectUsuariosPuntaje() {
-    let usuarios = await conseguirUsuarios()
-    console.log(usuarios)
-    let selectUsuario = ``
-    for (let i = 0; i < usuarios.length; i++) {
-        selectUsuario += `<option value="${usuarios[i].id}">
-        ${usuarios[i].id} - ${usuarios[i].usuario}  - Puntaje: ${usuarios[i].puntaje}
-    </option>`;
+    try {
+        let usuarios = await conseguirUsuarios()
+        console.log(usuarios)
+        let selectUsuario = ``
+        for (let i = 0; i < usuarios.length; i++) {
+            selectUsuario += `<option value="${usuarios[i].id}">
+            ${usuarios[i].id} - ${usuarios[i].usuario}  - Puntaje: ${usuarios[i].puntaje}
+        </option>`;
+        }
+    
+        document.getElementById("SelectPuntaje").innerHTML += selectUsuario
+    } catch (error) {
+        console.log(error)
     }
-
-    document.getElementById("SelectPuntaje").innerHTML += selectUsuario
 }
 
 async function buscarRespuestasDePregunta() {
-    let idPregunta = ui.getIdPreguntaEditar()
-    const respuestas = await conseguirRespuestasEspecificas(idPregunta)
-    console.log(respuestas)
-    document.getElementById("SelectRespuesta").innerHTML = "";
-    let selectRespuesta = ``
-    for (let i = 0; i < respuestas.length; i++) {
-        selectRespuesta += `<option value="${respuestas[i].id_respuesta}">
-            ${respuestas[i].id_respuesta} - '${respuestas[i].respuesta}' 
-        </option>`;
+    try {
+        let idPregunta = ui.getIdPreguntaEditar()
+        const respuestas = await conseguirRespuestasEspecificas(idPregunta)
+        console.log(respuestas)
+        document.getElementById("SelectRespuesta").innerHTML = "";
+        let selectRespuesta = ``
+        for (let i = 0; i < respuestas.length; i++) {
+            selectRespuesta += `<option value="${respuestas[i].id_respuesta}">
+                ${respuestas[i].id_respuesta} - '${respuestas[i].respuesta}' 
+            </option>`;
+        }
+        document.getElementById("SelectRespuesta").innerHTML += selectRespuesta
+    } catch (error) {
+        console.log(error)
     }
-    document.getElementById("SelectRespuesta").innerHTML += selectRespuesta
 
 }
 

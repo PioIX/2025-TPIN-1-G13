@@ -504,12 +504,16 @@ app.delete('/EliminarUsuario', async function(req,res){
 })
 
 app.put('/EditarPuntaje', async function(req,res){
-    const respuesta = await realizarQuery(`
-        UPDATE Usuarios
-        SET puntaje = '${req.body.puntaje}'
-        WHERE id = ${req.body.id}
-    `)
-    res.send({mensaje: "Puntaje editado con exito"})
+    try {
+        const respuesta = await realizarQuery(`
+            UPDATE Usuarios
+            SET puntaje = '${req.body.puntaje}'
+            WHERE id = ${req.body.id}
+        `)
+        res.send({mensaje: "Puntaje editado con exito"})
+    } catch (error) {
+        console.log(error)
+    }
 })
 
 
@@ -542,22 +546,30 @@ app.delete('/EliminarPregunta', async function(req,res){
 })
 
 app.put('/EditarPregunta', async function(req,res){
-    const response = await realizarQuery(`
-        UPDATE Preguntas
-        SET pregunta = '${req.body.pregunta}'
-        WHERE id_pregunta = ${req.body.id_pregunta}
-    `)
-    res.send({mensaje: "Pregunta editada con exito"})
+    try {
+        const response = await realizarQuery(`
+            UPDATE Preguntas
+            SET pregunta = '${req.body.pregunta}'
+            WHERE id_pregunta = ${req.body.id_pregunta}
+        `)
+        res.send({mensaje: "Pregunta editada con exito"})
+    } catch (error) {
+        console.log(error)
+    }
 })
 
 
 app.put('/EditarRutaImagen', async function(req,res){
-    const response = await realizarQuery(`
-        UPDATE Preguntas
-        SET imagen = '${req.body.imagen}'
-        WHERE id_pregunta = ${req.body.id_pregunta}
-    `)
-    res.send({mensaje: "Imagen editada"})
+    try {
+        const response = await realizarQuery(`
+            UPDATE Preguntas
+            SET imagen = '${req.body.imagen}'
+            WHERE id_pregunta = ${req.body.id_pregunta}
+        `)
+        res.send({mensaje: "Imagen editada"})
+    } catch (error) {
+        console.log(error)
+    }
 })
 
 app.post('/conseguirIdPregunta', async function(req,res){
@@ -588,12 +600,16 @@ app.post('/subirRespuesta', async function(req,res){
 })
 
 app.put('/EditarRespuesta', async function(req,res){
-    const response = await realizarQuery(`
-        UPDATE Respuestas
-        SET respuesta = '${req.body.respuesta}'
-        WHERE id_respuesta = ${req.body.id_respuesta}
-    `)
-    res.send({mensaje: "Respuesta editada con exito"})
+    try {
+        const response = await realizarQuery(`
+            UPDATE Respuestas
+            SET respuesta = '${req.body.respuesta}'
+            WHERE id_respuesta = ${req.body.id_respuesta}
+        `)
+        res.send({mensaje: "Respuesta editada con exito"})
+    } catch (error) {
+        console.log(error)
+    }
 })
 
 
