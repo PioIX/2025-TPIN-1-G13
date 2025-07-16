@@ -321,10 +321,14 @@ async function registrar() {
 
 async function datosPregunta() {
     try {
+        let imagen = ui.getImagen()
+        if (imagen == "") {
+            imagen = null
+        }
         let datos = {
             pregunta: ui.getPregunta(),
             categoria: ui.getCategoria(),
-            imagen: ui.getImagen()
+            imagen: imagen
         }
         return datos
     } catch (error) {
@@ -341,7 +345,7 @@ async function postPregunta() {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify(datos)
-        })
+            })
         let result = await response.json()
         ui.showModal("Pregunta subida con éxito")
     } catch (error) {

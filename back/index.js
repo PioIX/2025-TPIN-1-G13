@@ -521,9 +521,28 @@ app.put('/EditarPuntaje', async function(req,res){
 
 app.post('/subirPregunta', async function(req,res){
     try {
+        if (req.body.imagen == null) {
+            const respuesta = await realizarQuery(`
+                INSERT INTO Preguntas (pregunta, categoria, imagen)
+                VALUES ('${req.body.pregunta}','${req.body.categoria}', ${req.body.imagen})
+            `)
+        } else {
+            const respuesta = await realizarQuery(`
+                INSERT INTO Preguntas (pregunta, categoria, imagen)
+                VALUES ('${req.body.pregunta}','${req.body.categoria}', '${req.body.imagen}')
+            `)
+        }
+        res.send({mensaje: "Se insertó la pregunta"})
+    } catch (error) {
+        console.log(error)
+    }
+})
+
+app.post('/subirPreguntaSinImagen', async function(req,res){
+    try {
         const respuesta = await realizarQuery(`
             INSERT INTO Preguntas (pregunta, categoria, imagen)
-            VALUES ('${req.body.pregunta}','${req.body.categoria}', '${req.body.imagen}')
+            VALUES ('${req.body.pregunta}','${req.body.categoria}', ${req.body.imagen})
         `)
         res.send({mensaje: "Se insertó la pregunta"})
     } catch (error) {

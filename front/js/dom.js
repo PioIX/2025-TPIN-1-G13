@@ -223,7 +223,9 @@ class UserInterface {
                 `
                 ${barraHTML}
                 <h2 class="numeroPregunta">Pregunta ${contadorPreguntas}</h2>
-                <img src="${imagen}" alt="Imagen de la Pregunta">
+                <div class="contenedorImagen">
+                    <img src="${imagen}" alt="Imagen de la Pregunta" class="imagenPregunta">
+                </div>  
                 <h3 class="pregunta-juego">${preguntaActual}</h3>
             `;
             divPregunta.innerHTML = info
@@ -252,14 +254,16 @@ class UserInterface {
         document.getElementById("respuestasPregunta").style.display = 'none';
     }
 
-    deshabilitarRespuestasCorrectas() {
+    async deshabilitarRespuestasCorrectas() {
         document.getElementById("mensaje").style.display = 'none';
         document.getElementById("preguntaResponder").innerHTML += `
                     <div class="mensajeCorrecta">
                     <p>BIEN HECHO, HAS ACERTADO LA PREGUNTA</p>
-                    <button onclick="juegoCarga()">Continuar</button>
                     </div>
                 `;
+        await new Promise(resolve => setTimeout(resolve, 3000))
+        juegoCarga()
+        
     }
 
     desactivarBotonSolo(boton) {
