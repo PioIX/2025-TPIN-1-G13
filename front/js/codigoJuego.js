@@ -5,7 +5,7 @@ let resta = 25
 let tiempoPartida = 0
 let contadorPreguntas = 0
 let preguntasYaSeleccionadas = []
-
+let temporizador; // guardará el ID del setInterval
 
 async function conseguirCategorias() {
     const response = await fetch(`http://localhost:4006/categorias`, {
@@ -41,7 +41,6 @@ async function conseguirVector() {
     let preguntasCategoria = await conseguirPreguntasDeCategoria(categoriaSeleccionada)
     let preguntaSeleccionada = preguntasCategoria[Math.floor(Math.random() * preguntasCategoria.length)].pregunta; // se consigue el valor de la pregunta
     result.push(preguntaSeleccionada, categoriaSeleccionada)
-    contadorPreguntas += 1
     sumapuntos = 100
     return result
 }
@@ -49,29 +48,46 @@ async function conseguirVector() {
 
 
 async function juegoCarga() {
-    document.getElementById("preguntaResponder").style.display = 'none';
+    if (document.getElementById("cronometro").style.display == 'none') {
+        iniciarCronometro()
+    }
+    ui.clearIdsParts()
     if (contadorPreguntas <= 20) {
         ui.PantallaCarga()
+        let yaAparecio
         let vector = await conseguirVector()
         preguntaActual = vector[0]
         console.log(preguntaActual)
         let id = await conseguirIdPregunta(preguntaActual)
         for (let i = 0; i < preguntasYaSeleccionadas.length; i++) {
             if (preguntasYaSeleccionadas[i] == id) {
-                console.log("Esta pregunta ya fue seleccionada")
-                juegoCarga()
+                yaAparecio = true
             }
         }
-        preguntasYaSeleccionadas.push(id)
-        let categoria = vector[1]
-        console.log("Pregunta: ", preguntaActual, "- Categoria: ", categoria)
-        await new Promise(resolve => setTimeout(resolve, 4750))
-        ui.rellenarPrePregunta(categoria)
+        if (yaAparecio == true) {
+            console.log("La pregunta ya fue seleccionada")
+            juegoCarga()
+        } else {
+            preguntasYaSeleccionadas.push(id)
+            let categoria = vector[1]
+            console.log("Pregunta: ", preguntaActual, "- Categoria: ", categoria)
+            await new Promise(resolve => setTimeout(resolve, 4750))
+            contadorPreguntas += 1
+            ui.rellenarPrePregunta(categoria)
+        }
+        
     } else {
+        detenerCronometro()
         console.log("finaliza el juego")
+        finalizacionJuego()
         // ui.final()
     }
 }
+
+
+
+
+
 
 async function corroborarImagenEnPregunta(preguntaActual) {
     try {
@@ -118,22 +134,25 @@ async function verificacion(respuestaSeleccionada) {
 }
 
 async function VerificarRespuesta(boton) {
+    ui.desactivarBotonSolo(boton)
     let respuestaSeleccionada = boton.innerText;
     console.log("Se apretó:", respuestaSeleccionada);
     let result = await verificacion(respuestaSeleccionada)
     if (result[0].correcta === 0) {
+        boton.classList.add("respuesta-incorrecta");
         console.log("La respuesta es incorrecta")
         sumapuntos -= resta
-        //ui.funciondePuntajeyCambiodeColores
+        ui.mensajePuntos()
     } else {
+
+        boton.classList.add("respuesta-correcta");
         ui.deshabilitarRespuestasCorrectas()
-        respondido = true
+        ui.desactivarBotones()
         clearInterval(timerInterval)
         let barra = document.getElementById("barra-timer");
         if (barra) barra.style.display = "none";
         console.log("La respuesta es correcta")
         contadorPuntos += sumapuntos
-
         //ui.funciondePuntajeyCambiodeColores
     }
 }
@@ -169,10 +188,141 @@ function iniciarTimer() {
             clearInterval(timerInterval);
             if (!respondido) {
                 document.getElementById("preguntaResponder").innerHTML += `
-                    <div class="mensajeTiempo">⏰ ¡Se acabó el tiempo!</div>
+                    <div class="mensajeTiempo">⏰ ¡Se acabó el tiempo!
+                    <br>Pero no te preocupes, aún puedes seguir jugando<br>
+                    <button onclick="juegoCarga()">Continuar</div>
                 `;
                 ui.deshabilitarRespuestas();
             }
         }
     }, 1000);
+
+
+}
+
+function iniciarCronometro() {
+    tiempoPartida = 0;
+    document.getElementById("cronometro").style.display = 'block';
+    document.getElementById("cronometro").innerText = `Tiempo: 0s`;
+
+    temporizador = setInterval(() => {
+        tiempoPartida++;
+        document.getElementById("cronometro").innerText = `Tiempo: ${tiempoPartida}s`;
+    }, 1000);
+}
+
+function detenerCronometro() {
+    clearInterval(temporizador);
+    console.log("Se detuvo el cronometro. Tiempo final: ", tiempoPartida)
+}
+
+
+// FINALIZACION DEL JUEGO -------------------------------------------------
+
+async function BuscarPuntajeUsuario(idLogged) {
+    try {
+        const response = await fetch(`http://localhost:4006/BuscarPuntajeUsuario`, {
+                method: "POST", //GET, POST, PUT o DELETE
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({id: idLogged})
+            })
+            let result = await response.json()
+            if (result[0].puntaje == null) {
+                result[0].puntaje = 0
+                return result[0].puntaje
+            } else {
+                return result[0].puntaje
+            }
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+async function BuscarTiempoUsuario(idLogged) {
+    try {
+        const response = await fetch(`http://localhost:4006/BuscarTiempoUsuario`, {
+                method: "POST", //GET, POST, PUT o DELETE
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({id: idLogged})
+            })
+            let result = await response.json()
+            if (result[0].tiempo == null) {
+                return result[0].tiempo = 0
+            } else {
+                return result[0].tiempo
+            }
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+async function insertarPuntajeDelUsuario(contadorPuntos, tiempoPartida, idLogged) {
+    const response = await fetch(`http://localhost:4006/update`, {
+            method: "PUT", //GET, POST, PUT o DELETE
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({puntaje: contadorPuntos, tiempo: tiempoPartida, id: idLogged})
+        })
+        let result = await response.json()
+        console.log(result)
+        return result
+}
+
+
+async function finalizacionJuego() {
+    console.log(idLogged)
+    let puntajeEnTabla = await BuscarPuntajeUsuario(idLogged)
+    let tiempoEnTabla = await BuscarTiempoUsuario(idLogged)
+    console.log(puntajeEnTabla, tiempoEnTabla)
+    // let realizado = await insertarPuntajeDelUsuario(contadorPuntos, tiempoPartida, idLogged)
+    
+    if (puntajeEnTabla >= contadorPuntos) {
+        ui.showModal("En otra Partida ha realizado más puntos")
+    } else {
+        let realizado = await insertarPuntajeDelUsuario(contadorPuntos, tiempoPartida, idLogged)
+        console.log(realizado)
+        console.log("aca hacer ui. para volver al inicio o ir al ranking")
+    }
+    if (tiempoEnTabla > tiempoPartida && puntajeEnTabla == contadorPuntos){
+        if (tiempoEnTabla == 0) {
+            let realizado = await insertarPuntajeDelUsuario(contadorPuntos, tiempoPartida, idLogged)
+            console.log(realizado)
+            console.log("aca hacer ui. para volver al inicio o ir al ranking")
+        } else {
+            ui.showModal("En otra partida hizo los mismos puntos en menos tiempo.")
+        }
+    }
+}
+
+async function actualizarTabla() {
+    try {
+        const response = await fetch(`http://localhost:4006/ranking`, {
+        method: "GET", //GET, POST, PUT o DELETE
+        headers: {
+            "Content-Type": "application/json",
+        },
+        })
+        const usuarios = await response.json();
+
+        const cuerpoTabla = document.getElementById("cuerpoRanking");
+        cuerpoTabla.innerHTML = ""; // limpia el contenido anterior
+        let agregar = ""
+        for (let i=0; i < usuarios.length; i++) {
+            agregar += `
+                <tr>
+                    <td> ${i + 1} </td>
+                    <td> ${usuarios[i].usuario} </td>
+                    <td> ${usuarios[i].puntaje}</td>
+                    <td> ${usuarios[i].tiempo} </td>
+                </tr>`
+        }
+        cuerpoTabla.innerHTML = agregar
+    } catch (error) {
+        console.error("Error al actualizar el ranking", error);
+    }
 }

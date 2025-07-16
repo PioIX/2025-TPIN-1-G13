@@ -28,7 +28,7 @@
     <main>
         <section class="contenedorBody" id="loginForm">
             <div class="LogAndRegister">
-                <legend>¡Bienvenido! Inicie sesión o Registrese</legend>
+                <legend>¡Bienvenido! <br>Inicie sesión o Registrese</legend>
                 <div class="input-usuario">
                     <input type="text" class="nombreUsuario" id="username" placeholder="agusputripro">
                     <label for="username">Nombre de usuario</label>
@@ -153,6 +153,7 @@
                         cómo jugarlo</label>
                 </div>
                 <div class="contenedor" id="seleccion">
+                    <div id="cronometro" style="display: none;">Tiempo de la Partida: 0s</div>
                     <div class="aleatorio" id="aleatorio">
                         <label>Presione el botón para que le toque una categoria aleatoria. ¡Suerte!</label>
                         <img src="../IMAGES/ImagenPREJUEGO.webp" alt="icono preguntados">
@@ -171,6 +172,7 @@
                     </div>
                     <div id="prePregunta" style="display: none;"></div>
                     <div id="preguntaResponder" style="display: none;"></div>
+                    <div id="mensaje" style="display: none;"></div>
                     <div id="respuestasPregunta" style="display: none;"></div>
             </section>
             <section id="reglas" class="juego-seccion" style="display: none;">
@@ -190,13 +192,17 @@
             </section>
             <section id="ranking" class="juego-seccion" style="display: none;">
                 <h2>Ranking de Jugadores</h2>
-                <p>Estos son los jugadores con mejores puntajes:</p>
-                <ul id="listaRanking">
-                    <li>Juan - 80 puntos</li>
-                    <li>María - 75 puntos</li>
-                    <li>Pedro - 60 puntos</li>
-                    <!-- Luego se cargan los datos reales con JS -->
-                </ul>
+                <table id="tablaRanking">
+                    <thead>
+                        <tr>
+                            <th>Puesto</th>
+                            <th>Nombre</th>
+                            <th>Puntaje</th>
+                            <th>Tiempo (s)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="cuerpoRanking"></tbody>
+                </table>
             </section>
         </section>
     </main>

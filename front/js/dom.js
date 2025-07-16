@@ -88,7 +88,9 @@ class UserInterface {
         secciones.forEach(sec => {
             sec.style.display = (sec.id === id) ? 'block' : 'none';
         }); 
-        
+        if (id === 'ranking') {
+        actualizarTabla();
+    }
     }
 
     // PREGUNTAS GET ---------------------------------------------------------------------------------
@@ -198,8 +200,9 @@ class UserInterface {
         }
         let info =
             `
-            <label class="categoria">- ` + tematica[x].nombre + ` -</label>
+            <label class="categoria"> ` + tematica[x].nombre + ` </label>
             <img src="` + tematica[x].icono + `" alt="Categoría">
+            <p> Puntaje Actual: ${contadorPuntos} </p>
             <button class="comenzar" onclick="PreguntasJuego()">Comenzar con la pregunta</button>
         `;
         div.innerHTML = info
@@ -219,6 +222,7 @@ class UserInterface {
             let info = 
                 `
                 ${barraHTML}
+                <h2 class="numeroPregunta">Pregunta ${contadorPreguntas}</h2>
                 <img src="${imagen}" alt="Imagen de la Pregunta">
                 <h3 class="pregunta-juego">${preguntaActual}</h3>
             `;
@@ -249,7 +253,7 @@ class UserInterface {
     }
 
     deshabilitarRespuestasCorrectas() {
-        document.getElementById("respuestasPregunta").style.display = 'none';
+        document.getElementById("mensaje").style.display = 'none';
         document.getElementById("preguntaResponder").innerHTML += `
                     <div class="mensajeCorrecta">
                     <p>BIEN HECHO, HAS ACERTADO LA PREGUNTA</p>
@@ -258,13 +262,39 @@ class UserInterface {
                 `;
     }
 
-
-    // VERIFICACIONES
-    funciondePuntajeyCambiodeColores(){
-        div = document.getElementById("")
-        
+    desactivarBotonSolo(boton) {
+        boton.disabled = true;
+        boton.style.cursor = "not-allowed";
+        boton.style.opacity = "0.8";
     }
 
+    desactivarBotones() {
+        const botones = document.querySelectorAll("#respuestasPregunta button");
+        botones.forEach(b => {
+            b.disabled = true;
+            b.style.cursor = "not-allowed";
+            b.style.opacity = "0.8";
+        });
+    }
+
+    mensajePuntos() {
+        if (document.getElementById("mensaje").style.display == 'none') {
+            document.getElementById("mensaje").style.display = 'block';
+            document.getElementById("mensaje").innerHTML += `
+                    <div class="mensajePuntos">
+                    <p>Has Fallado. Aún puedes contestar, pero valdrá menos puntos</p>
+                    </div>
+                `;
+        } else {
+            console.log("Ya hay un mensaje")
+        }
+    }
+
+    clearIdsParts() {
+        document.getElementById("preguntaResponder").style.display = 'none';
+        document.getElementById("mensaje").style.display = 'none';
+        document.getElementById("respuestasPregunta").style.display = 'none';
+    }
 }
 
 

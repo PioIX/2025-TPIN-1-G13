@@ -645,3 +645,53 @@ app.post('/verificacionRespuesta', async function (req,res) {
         console.log(error)
     }
 })
+
+app.post('/BuscarPuntajeUsuario', async function (req,res) {
+    try {
+        const respuesta = await realizarQuery(`
+            Select puntaje FROM Usuarios WHERE id = '${req.body.id}'   
+        `)
+        console.log(respuesta)
+        res.send(respuesta)
+    } catch (error) {
+        console.log(error)
+    }
+})
+
+app.post('/BuscarTiempoUsuario', async function (req,res) {
+    try {
+        const respuesta = await realizarQuery(`
+            Select tiempo FROM Usuarios WHERE id = '${req.body.id}'   
+        `)
+        console.log(respuesta)
+        res.send(respuesta)
+    } catch (error) {
+        console.log(error)
+    }
+})
+
+app.put('/update', async function(req,res){
+    try {
+        const response  = await realizarQuery(`
+            UPDATE Usuarios
+            SET puntaje = '${req.body.puntaje}', tiempo = '${req.body.tiempo}'
+            WHERE id = '${req.body.id}'
+        `)
+        res.send({mensaje: "Puntaje y/o Tiempo editado con exito"})
+    } catch (error) {
+        console.log("Error en la funcion")
+    }
+})
+
+app.get('/ranking', async function(req, res) {
+    try {
+        const resultado = await realizarQuery(`
+            SELECT * FROM Usuarios
+            WHERE tiempo > 0
+            ORDER BY puntaje DESC, tiempo ASC
+        `);
+        res.send(resultado);
+    } catch (error) {
+        console.log("Error al obtener el ranking", error);
+    }
+});

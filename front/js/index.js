@@ -207,8 +207,7 @@ async function conseguirID(nombre) {
 
         })
         let result = await respuesta.json()
-        console.log(result)
-        return result
+        return result[0].id
     } catch (error) {
         console.log(error)
     }
@@ -244,7 +243,6 @@ async function login() {
         console.log(resultado)
         if (resultado.length > 0) {  // SEGUIR SISTEMA DE LENGHT PARA USUARIOS
             idLogged = await conseguirID(nombre);
-            console.log(idLogged)
             let admin = await esAdmin(nombre)
             console.log(admin)
             if (admin > 0) {
