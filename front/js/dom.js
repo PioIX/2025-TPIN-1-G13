@@ -300,6 +300,16 @@ class UserInterface {
         document.getElementById("mensaje").style.display = 'none';
         document.getElementById("respuestasPregunta").style.display = 'none';
     }
+
+    final() {
+        document.getElementById("respuestasPregunta").style.display = 'none';
+        document.getElementById("mensaje").style.display = 'none';
+        document.getElementById("preguntaResponder").style.display = 'none';
+        document.getElementById("prePregunta").style.display = 'none';
+        document.getElementById("cronometro").style.display = 'none';
+        this.mostrarSeccionJUGAR('ranking')
+        document.getElementById("aleatorio").style.display = 'block';
+    }
 }
 
 

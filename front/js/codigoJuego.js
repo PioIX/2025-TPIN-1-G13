@@ -325,18 +325,20 @@ async function finalizacionJuego() {
         
         if (puntajeEnTabla >= contadorPuntos) {
             ui.showModal("En otra Partida ha realizado más puntos")
+            ui.final()
         } else {
             let realizado = await insertarPuntajeDelUsuario(contadorPuntos, tiempoPartida, idLogged)
             console.log(realizado)
-            console.log("aca hacer ui. para volver al inicio o ir al ranking")
+            ui.final()
         }
         if (tiempoPartida < tiempoEnTabla && puntajeEnTabla == contadorPuntos){
             if (tiempoEnTabla == 0) {
                 let realizado = await insertarPuntajeDelUsuario(contadorPuntos, tiempoPartida, idLogged)
                 console.log(realizado)
-                console.log("aca hacer ui. para volver al inicio o ir al ranking")
+                ui.final()
             } else {
                 ui.showModal("En otra partida hizo los mismos puntos en menos tiempo.")
+                ui.final()
             }
         }
     } catch (error) {
