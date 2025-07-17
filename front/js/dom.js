@@ -284,6 +284,7 @@ class UserInterface {
 
     mensajePuntos() {
         if (document.getElementById("mensaje").style.display == 'none') {
+            document.getElementById("mensaje").innerHTML = "";
             document.getElementById("mensaje").style.display = 'block';
             document.getElementById("mensaje").innerHTML += `
                     <div class="mensajePuntos">
@@ -309,6 +310,11 @@ class UserInterface {
         document.getElementById("cronometro").style.display = 'none';
         this.mostrarSeccionJUGAR('ranking')
         document.getElementById("aleatorio").style.display = 'block';
+    }
+
+    mostrarSecciones() {
+        document.getElementById("EncabezadoJuego").style.display = 'block';
+        document.getElementById("botonesMenu").style.display = 'block';
     }
 }
 

@@ -89,7 +89,6 @@ async function juegoCarga() {
             detenerCronometro()
             console.log("finaliza el juego")
             finalizacionJuego()
-            // ui.final()
         }
     } catch (error) {
         console.log(error)
@@ -213,7 +212,9 @@ function iniciarTimer() {
                 clearInterval(timerInterval);
                 if (!respondido) {
                     document.getElementById("mensaje").style.display = 'none';
-                    document.getElementById("preguntaResponder").innerHTML += `
+                    document.getElementById("mensajeTiempo").style.display = 'block';
+                    document.getElementById("mensajeTiempo").innerHTML = "";
+                    document.getElementById("mensajeTiempo").innerHTML += `
                         <div class="mensajeTiempo">⏰ ¡Se acabó el tiempo!
                         <br>Pero no te preocupes, aún puedes seguir jugando<br>
                         <button onclick="juegoCarga()">Continuar</div>
@@ -326,19 +327,23 @@ async function finalizacionJuego() {
         if (puntajeEnTabla >= contadorPuntos) {
             ui.showModal("En otra Partida ha realizado más puntos")
             ui.final()
+            ui.mostrarSecciones()
         } else {
             let realizado = await insertarPuntajeDelUsuario(contadorPuntos, tiempoPartida, idLogged)
             console.log(realizado)
             ui.final()
+            ui.mostrarSecciones()
         }
         if (tiempoPartida < tiempoEnTabla && puntajeEnTabla == contadorPuntos){
             if (tiempoEnTabla == 0) {
                 let realizado = await insertarPuntajeDelUsuario(contadorPuntos, tiempoPartida, idLogged)
                 console.log(realizado)
                 ui.final()
+                ui.mostrarSecciones()
             } else {
                 ui.showModal("En otra partida hizo los mismos puntos en menos tiempo.")
                 ui.final()
+                ui.mostrarSecciones()
             }
         }
     } catch (error) {
