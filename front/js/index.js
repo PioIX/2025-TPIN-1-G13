@@ -347,6 +347,7 @@ async function postPregunta() {
             body: JSON.stringify(datos)
             })
         let result = await response.json()
+        console.log(result)
         ui.showModal("Pregunta subida con éxito")
     } catch (error) {
         console.log(error)
@@ -418,6 +419,7 @@ async function postRespuestas() {
             });
     
             let result = await response.json();
+            console.log(result)
         }
         ui.clearAgregarPreguntasyRespuestasInputs()
         ui.showModal("Respuestas subidas con éxito - Vinculadas a la pregunta");

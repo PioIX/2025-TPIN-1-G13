@@ -30,6 +30,7 @@ class UserInterface {
     clearAgregarPreguntasyRespuestasInputs() {
         document.getElementById("pregunta").value = "";
         document.getElementById("categoria").value = "";
+        document.getElementById("imagen").value = "";
         document.getElementById("opcionUno").value = "";
         document.getElementById("opcion1").checked = false
         document.getElementById("opcionDos").value = "";
