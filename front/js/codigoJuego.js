@@ -57,6 +57,7 @@ async function conseguirVector() {
 
 async function juegoCarga() {
     try {
+        document.getElementById("mensajeTiempo").style.display = 'none';
         if (document.getElementById("cronometro").style.display == 'none') {
             iniciarCronometro()
         }
@@ -212,8 +213,9 @@ function iniciarTimer() {
                 clearInterval(timerInterval);
                 if (!respondido) {
                     document.getElementById("mensaje").style.display = 'none';
-                    document.getElementById("mensajeTiempo").style.display = 'block';
                     document.getElementById("mensajeTiempo").innerHTML = "";
+                    document.getElementById("mensajeTiempo").style.display = 'block';
+                    
                     document.getElementById("mensajeTiempo").innerHTML += `
                         <div class="mensajeTiempo">⏰ ¡Se acabó el tiempo!
                         <br>Pero no te preocupes, aún puedes seguir jugando<br>

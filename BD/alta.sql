@@ -43,9 +43,9 @@ VALUES
     ("¿Qué país ganó el mundial de fútbol masculino en 2010?", "Deporte", null);
 
 
-INSERT INTO Respuestas (id_respuesta, id_pregunta, correcta, respuesta)
+INSERT INTO Respuestas (id_pregunta, correcta, respuesta)
 VALUES
-    (1, 1, FALSE, "Naboni"),
+    (1, FALSE, "Naboni"),
     (2, 1, TRUE, "Naddeo"),
     (3, 1, FALSE, "Rivas"),
     (4, 1, FALSE, "Facon"),

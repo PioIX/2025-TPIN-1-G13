@@ -234,7 +234,8 @@ class UserInterface {
             let info = 
                 `
                 ${barraHTML}
-                <h3>${preguntaActual}</h3>
+                <h2 class="numeroPregunta">Pregunta ${contadorPreguntas}</h2>
+                <h3 class="pregunta-juego">${preguntaActual}</h3>
             `;
             divPregunta.innerHTML = info
         }
