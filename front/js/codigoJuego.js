@@ -321,6 +321,7 @@ async function insertarPuntajeDelUsuario(contadorPuntos, tiempoPartida, idLogged
 async function finalizacionJuego() {
     try {
         console.log(idLogged)
+        contadorPreguntas = 0
         let puntajeEnTabla = await BuscarPuntajeUsuario(idLogged)
         let tiempoEnTabla = await BuscarTiempoUsuario(idLogged)
         console.log(puntajeEnTabla, tiempoEnTabla)
